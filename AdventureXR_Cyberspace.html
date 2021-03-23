@@ -1,0 +1,588 @@
+<html><div style="display: none !important; position: static !important; top: 0px !important; left: 0px !important; width: 0px !important; height: 0px !important;" id="twoseven-scripts" data-info="Scripts added by TwoSeven extension"><script type="text/javascript" id="__tmpScript-339414879" data-added-by-two-seven="1">(function() {
+    window.twoseven = {};
+  })();</script><script type="text/javascript" id="__tmpScript-368827804" data-added-by-two-seven="1">(function() {
+    window.twoseven.waitForDOMNode = async function waitForDOMNode(e,t=document){e=e||{};const{type:n,value:o}=e;if(!n||!o)throw new Error("Must specify identifier");let s=o;switch(n){case"tag":s=o.toUpperCase()}if("check"!==n){const e=await i({type:"selector",value:s},[],t);if(e)return new Promise(t=>t(e))}async function i({type:e,value:t},n,o){let s;switch(e){case"tag":s=n.find(e=>e.tagName===t);break;case"selector":s=o.querySelector(t);break;case"check":for(const e of n){if(await t(e))return e}}return s}return new Promise((e,o)=>{const r=new MutationObserver(async o=>{for(const a of o)if("childList"===a.type){const o=Array.from(a.addedNodes),c=await i({type:n,value:s},o,t);if(c)return r.disconnect(),e(c)}});r.observe(t,{childList:!0,subtree:!0})})};
+  })();</script><script type="text/javascript" id="__tmpScript-415781487" data-added-by-two-seven="1">(function() {
+    
+  window.twoseven.reportError = function reportError(e,t,n){"string"==typeof(n=n||{})&&(n={message:n});const{message:o,stack:s}=t;Object.assign(n,{tag:e,error:{message:o,stack:s}}),window.tsExtGetPostToParent()({name:name,tag:e,action:"report-error",json:n}),console.error(JSON.stringify(n.error))}
+;
+  })();</script><script type="text/javascript" id="__tmpScript-878047242" data-added-by-two-seven="1">(function() {
+    
+  window.twosevenHmsToSecondsOnly = function(str) {
+      var p = str.split(':'),
+          s = 0, m = 1;
+
+      while (p.length > 0) {
+          s += m * parseInt(p.pop(), 10);
+          m *= 60;
+      }
+
+      return s;
+  }
+;
+  })();</script><script type="text/javascript" id="__tmpScript-304518326" data-added-by-two-seven="1">(function() {
+    window.twosevenExtLog = function twosevenExtLog(e,o,c){o||(o=e,e=void 0);let n=c||"black";if(c)switch(c){case"success":n="Green";break;case"info":n="DodgerBlue";break;case"error":n="Red";break;case"warning":n="Orange";break;default:n=c}e?console.log("%c"+e+": "+o,`color:${n}`):console.log("%c"+o,`color:${n}`)};
+  })();</script><script type="text/javascript" id="__tmpScript-57991019" data-added-by-two-seven="1">(function() {
+    
+  document.twosevenGET = function(url, callback) {
+    var xmlhttp = new XMLHttpRequest();
+
+    xmlhttp.onreadystatechange = function() {
+      if (xmlhttp.readyState == XMLHttpRequest.DONE ) {
+        if (xmlhttp.status == 200) {
+          callback(null, xmlhttp.responseText);
+        } else {
+          callback('something else other than 200 was returned', '');
+        }
+      }
+    };
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+  };
+;
+  })();</script><script type="text/javascript" id="__tmpScript-633558893" data-added-by-two-seven="1">(function() {
+    
+  window.triggerEvent = function(e,t,n,o=!1){let s;o?(n&&"string"!=typeof n&&(n=JSON.stringify(n)),s=n):s={data:n},window.twosevenScriptsDiv&&n&&"object"==typeof n&&(console.warn(`WARNING: Attempting to send an object via event.detail from CS->Page does not work on Firefox: ${JSON.stringify(n)}`),console.error((new Error).stack));var i=new CustomEvent(t,{bubbles:!0,composed:!0,detail:s});e.dispatchEvent(i)}
+;
+  })();</script><script type="text/javascript" id="__tmpScript-381627002" data-added-by-two-seven="1">(function() {
+    window.twoseven.postTo = async function postTo(e,t,n=!1){let o;return t.name=t.name||name,o=n?new Promise(e=>{const n=`ack-${t.action}-${1e9*Math.random()|0}`;t.ack={event:n};window.debug&&["play","pause","currentTime"].some(e=>t.action.includes(e)),window.addEventListener("message",function t({data:o={}}){o.action===n&&(window.removeEventListener("message",t),e(o.json))})}):new Promise(e=>e()),e.postMessage(t,"*"),o};
+  })();</script><script type="text/javascript" id="__tmpScript-298373377" data-added-by-two-seven="1">(function() {
+    window.tsExtGetPostTo = function tsExtGetPostTo(){return window.twoseven&&window.twoseven.postTo||window.postTo};
+  })();</script><script type="text/javascript" id="__tmpScript-747310221" data-added-by-two-seven="1">(function() {
+    window.tsExtGetPostToParent = function tsExtGetPostToParent(){return window.twoseven&&window.twoseven.postToParent||window.postToParent};
+  })();</script><script type="text/javascript" id="__tmpScript-633568928" data-added-by-two-seven="1">(function() {
+    window.twoseven.postResponse = async function postResponse(e,t){const{source:n,data:{ack:{event:o}}}=e;window.tsExtGetPostTo()(n,{action:o,json:t})};
+  })();</script><script type="text/javascript" id="__tmpScript-390480990" data-added-by-two-seven="1">(function() {
+    window.twoseven.postToParent = async function postToParent(e,t=!1){return window.tsExtGetPostTo()(window.parent,e,t)};
+  })();</script><script type="text/javascript" id="__tmpScript-130167703" data-added-by-two-seven="1">(function() {
+    window.twoseven.postToTop = async function postToTop(e,t=!1){return window.tsExtGetPostTo()(window.top,e,t)};
+  })();</script><script type="text/javascript" id="__tmpScript-776599681" data-added-by-two-seven="1">(function() {
+    
+  window.twoseven.getFromStorage = e=>new Promise((t,n)=>{const o="get-from-storage-"+(1e9*Math.random()|0);window.addEventListener(o,e=>{window.removeEventListener(o,this);const{detail:{data:{value:n}}}=e;t(n)}),triggerEvent(window,"get-from-storage",{key:e,evt:o})})
+  window.twoseven.saveToStorage = e=>{triggerEvent(window,"save-to-storage",e)}
+;
+  })();</script><script type="text/javascript" id="__tmpScript-762767057" data-added-by-two-seven="1">(function() {
+    
+  function attachHistoryListeners(){var e=history.pushState;history.pushState=function(t,n,o){return"function"==typeof history.onpushstate&&history.onpushstate({state:t}),triggerEvent(window,"pushstate",{uri:o}),e.apply(history,arguments)};var t=history.replaceState;history.replaceState=function(e){return"function"==typeof history.onreplacestate&&history.onreplacestate({state:e}),t.apply(history,arguments)}}
+  attachHistoryListeners()
+;
+  })();</script><script type="text/javascript" id="__tmpScript-159842442" data-added-by-two-seven="1">(function() {
+    window.twoseven.once = function once(e,t,n){e.addEventListener(t,function o(s){e.removeEventListener(t,o),n(s)})};
+  })();</script><script type="text/javascript" id="__tmpScript-233832229" data-added-by-two-seven="1">(function() {
+    
+  window.twoseven.isOnTwoSevenTab = async () => {
+    const result = await window.twoseven.postTo(window, { action: 'is-on-twoseven-tab' }, true)
+    return result
+  }
+;
+  })();</script><script type="text/javascript" id="__tmpScript-485563482" data-added-by-two-seven="1">(function() {
+    
+  window.twoseven.isPaused = async () => {
+    const result = await window.twoseven.postTo(window, { action: 'twoseven:pause-state' }, true)
+    return result
+  }
+;
+  })();</script><script type="text/javascript" id="__tmpScript-296562687" data-added-by-two-seven="1">(function() {
+    
+      const modal = document.querySelector('.twoseven-ext-tab-media-modal')
+      const modalCloseBtn = modal.querySelector('.close')
+      function closeModal () {
+        modal.style.display = 'none'
+        const frame = document.querySelector('#twoseven-ext-tab-media-iframe').contentWindow
+        frame.postMessage({
+          __evt_name: 'modal-hide'
+        }, '*')
+      }
+      modalCloseBtn.onclick = closeModal
+
+      window.onmessage = function (e) {
+        if (e.data.__evt_name === 'modal-hide') {
+          closeModal()
+        }
+      }
+
+      window.twoseven.closeTabMediaModal = closeModal
+
+      window.onclick = function (e) {
+        if (e.target.id === 'twoseven-ext-tab-media-modal' && modal.style.display === 'block') {
+            closeModal()
+        }
+      }
+    ;
+  })();</script></div><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>AdventureXR – Cyberspace</title>
+    <script type="text/javascript">
+      /**
+       * Twison - Twine 2 JSON Export Story Format
+       *
+       * Copyright (c) 2015 Em Walker
+       * https://lazerwalker.com
+       *
+       * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+       * associated documentation files (the "Software"), to deal in the Software without restriction,
+       * including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+       * and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
+       * subject to the following conditions:
+       *
+       * The above copyright notice and this permission notice shall be included in all copies or substantial
+       * portions of the Software.
+       *
+       * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
+       * LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+       * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+       * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+       * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+       */
+      var Twison={extractLinksFromText:function(t){var n=t.match(/\[\[.+?\]\]/g);return n?n.map(function(t){var n=t.match(/\[\[(.*?)\-\&gt;(.*?)\]\]/);return n?{name:n[1],link:n[2]}:(t=t.substring(2,t.length-2),{name:t,link:t})}):null},extractPropsFromText:function(t){var n,r={},e=!1;const a=/\{\{((\s|\S)+?)\}\}((\s|\S)+?)\{\{\/\1\}\}/gm;for(;null!==(n=a.exec(t));){const o=n[1],s=n[3].replace(/(\r\n|\n|\r)/gm,""),i=this.extractPropsFromText(s);r[o]=null!==i?i:s,e=!0}return e?r:null},convertPassage:function(t){var n={text:t.innerHTML},r=Twison.extractLinksFromText(n.text);r&&(n.links=r);const e=Twison.extractPropsFromText(n.text);if(e&&(n.props=e),["name","pid","position","tags"].forEach(function(r){var e=t.attributes[r].value;e&&(n[r]=e)}),n.position){var a=n.position.split(",");n.position={x:a[0],y:a[1]}}return n.tags&&(n.tags=n.tags.split(" ")),n},convertStory:function(t){var n=t.getElementsByTagName("tw-passagedata"),r=Array.prototype.slice.call(n).map(Twison.convertPassage),e={passages:r};["name","startnode","creator","creator-version","ifid"].forEach(function(n){var r=t.attributes[n].value;r&&(e[n]=r)});var a={};return e.passages.forEach(function(t){a[t.name]=t.pid}),e.passages.forEach(function(t){t.links&&t.links.forEach(function(t){t.pid=a[t.link],t.pid||(t.broken=!0)})}),e},convert:function(){var t=document.getElementsByTagName("tw-storydata")[0],n=JSON.stringify(Twison.convertStory(t),null,2);document.getElementById("output").innerHTML=n}};window.Twison=Twison;
+    </script>
+  <link href="AdventureXR%20%E2%80%93%20Cyberspace_files/modal.css" rel="stylesheet" id="__tmpStyle"></head>
+  <body>
+    <pre id="output">{
+  "passages": [
+    {
+      "text": "(set: $inv to (a: \"keycard\"))\n(set: $keycardState to \"broken\")\n(set: $availRooms to (a: \"EXT. Apartment B82-77\"))\nPost Climate City. Lower Classes relegated to below sea level, while upper classes are privileged with exposure to sunlight. Uniform architecture, sturdy but narrow pyramids.\n\n\n\n&lt;img src=\"https://cdn.discordapp.com/attachments/818234840214274101/821490463042568212/unknown.png\"&gt;\n(link: \"About the world\")[Our story takes place in The Eastern Statenal Collective (E.S.C), a self sustaining megalopolis contained entirely within climate controlled towers. The ESC's Mission Statement (predating it's founding and construction) states that it, as well as it's citizens, are strong in their independence, with an emphasis on \"forging their own path\" and frequent mobility.\n\nRandom stuff:\n\n* It is the norm for people to constantly be moving from floor to floor, each floor has something slightly unique to shake things up, and the core motivation for citizens is to reach the secure and luxurious upper echelons of their society (a pipe dream).\n* Identity can be changed at will by it's citizens, anonymity is a right\n* Following the fracturing of the internet, the ESC has it's own unique network: NetESC. All members are anonymous with no way of seeing a throughline between posts (though job titles are shown when verification is necessary)\n* Traditional social websites have been replaced with direct communication between members.]\n---\n[[Start-&gt;Your Apartment]]",
+      "links": [
+        {
+          "name": "Start",
+          "link": "Your Apartment",
+          "pid": "2"
+        }
+      ],
+      "name": "Start",
+      "pid": "1",
+      "position": {
+        "x": "758",
+        "y": "300"
+      },
+      "tags": [
+        "hideinventory",
+        "hideHub"
+      ]
+    },
+    {
+      "text": "Location: Your Apartment\n(link:\"Look around\")[A compact living space, about 12 by 18 feet, clearly designed to hold the most accomodation, (kitchen, bathroom, sleeping area) in the most efficient space possible. It's decorated with ''//TK//'' but it isn't enough to get rid of the mass produced reality of the space. There is no natural light.&lt;br&gt;]\n(link:\"Eat breakfast\")[Another health drink sent via central piping and into your cup. It apparently is called banana blast, though you wouldn't know if the taste is accurate.&lt;br&gt;\n(link:\"A chime at the computer\")[The screen reads: new assignment.&lt;br&gt;\n(link:\"Check assignment\")[&lt;span class=\"computer-text\"&gt;\"Good Morning, TB. Good job on....&lt;/span&gt;\n(link:\"uhh\")[&lt;span class=\"computer-text\"&gt;err: no item in employee.assignmenthistory has attribute \"commend\"&lt;/span&gt;\n(link:\"they really need to fix that.\")[&lt;span class=\"computer-text\"&gt;Your assignment today is to clear out Apartment B82-77. All items must be sorted for structure-wide recycling. Additional Notes: \"Please complete swiftly, a new citizen will move in tomorrow morning\" Thank you for your duty to our community. - E.S.C. Central Relocation and Recyccling//Class Mobility and Human Sustainability//&lt;/span&gt;&lt;br&gt;]]]]]",
+      "name": "Your Apartment",
+      "pid": "2",
+      "position": {
+        "x": "802",
+        "y": "486"
+      }
+    },
+    {
+      "text": "WIP - Connecting Space\n(if: $availRooms contains \"EXT. Apartment B82-77\")[ [[EXT. Apartment B82-77]]]\n(if: $availRooms contains \"The Newstand\")[ [[The Newstand]]]\n(if: $availRooms contains \"Security Station\")[ [[Security Station]]]\n(if: $availRooms contains \"EXT. Apartment B82-73\")[ [[EXT. Apartment B82-73]]]",
+      "links": [
+        {
+          "name": "EXT. Apartment B82-77",
+          "link": "EXT. Apartment B82-77",
+          "pid": "7"
+        },
+        {
+          "name": "The Newstand",
+          "link": "The Newstand",
+          "pid": "5"
+        },
+        {
+          "name": "Security Station",
+          "link": "Security Station",
+          "pid": "6"
+        },
+        {
+          "name": "EXT. Apartment B82-73",
+          "link": "EXT. Apartment B82-73",
+          "pid": "4"
+        }
+      ],
+      "name": "Hub Area",
+      "pid": "3",
+      "position": {
+        "x": "447",
+        "y": "469"
+      }
+    },
+    {
+      "text": "Apartment B82-73. Where missing person's friend is.\n\n(if: $door73 is \"unlocked\")[[[Knock on door. -&gt;INT. Apartment B82-73]]]",
+      "links": [
+        {
+          "name": "[Knock on door. ",
+          "link": "INT. Apartment B82-73",
+          "pid": "15"
+        }
+      ],
+      "name": "EXT. Apartment B82-73",
+      "pid": "4",
+      "position": {
+        "x": "257",
+        "y": "1003"
+      },
+      "tags": [
+        "undiscovered"
+      ]
+    },
+    {
+      "text": "(link: \"Look around\")[A standard newstand, at first glance. It's magazines, however are just projected images from a screen.]\n(link: \"Talk to attendant\")[\n\t(set: $inv to it + (a: \"mpGame\"))\nWIP. You takl about missing person The attendant lets you in on his (predictable) conspiracy theory. Big bad took person for some reason might have had something to do with this:\n\nThe man at the newstand gives you a datastick labelled \"s.c.-v1.6\"\n\nIt's a somewhat broken version of an old multiplayer game that belonged to missingperson (massive multiplayer games were regulated for their violation of the anonymity clause as well as addictive/escapist tendencies). I'ts only playable with bots but says m.p. made some mods to it\n\nHint: show game to clara.].",
+      "name": "The Newstand",
+      "pid": "5",
+      "position": {
+        "x": "729",
+        "y": "668"
+      }
+    },
+    {
+      "text": "Security Station. WIP basically character front for the \"corporation\".\n\n(link: \"DEV: Location Breakdown\")[First reason for coming here is getting access to room 77.]\n\n(if: $keycardState is \"broken\")[(link: \"Ask for access to Apt 77.\")[(show: ?fix-keycard)]]\n|fix-keycard)[Dialogue WIP. Security personell gives you access and reinforces that all property is property of the corporation.\n(link:\"Okay.\")[(set: $keycardState to \"fixed\")]]\n(if: $keycardState is \"fixed\")[[[Go to hub. -&gt;Hub Area]]]",
+      "links": [
+        {
+          "name": "[Go to hub. ",
+          "link": "Hub Area",
+          "pid": "3"
+        }
+      ],
+      "name": "Security Station",
+      "pid": "6",
+      "position": {
+        "x": "205",
+        "y": "639"
+      }
+    },
+    {
+      "text": "(if: $door77 is \"unlocked\")[(show:?enterRoom)]\nApartment B82-77, between B82-76 and B82-78.\n\nThere's someone by the door.\n\n{(link: \"Talk to them.\")[\n\t(set: $door73 to \"unlocked\")\n\t(set: $availRooms to it + (a:\"EXT. Apartment B82-73\"))\nDialogue TK. Citizen's friend, Clara. She's hiding something. Tells you that he didn't move and didn't die. Knows that you have to recycle everything, but hopes maybe she can keep something of whatever you find in there? You  can talk to her in [[Apt B82-73 -&gt;EXT. Apartment B82-73]]]}\n{(link: \"Use keycard\")[\n\t(if: $keycardState is \"broken\")[(show:?locked)]\n\t(else-if: $keycardState is \"fixed\")[(show:?unlocked)]\n\t]}\n{|locked)[\n\t(set: $availRooms to it + (a:\"Security Station\"))\nYou bring your keycard to the door but it doesn't open. //You probably need to get access at security//.]}\n{|unlocked)[\n\t(set: $door77 to \"unlocked\")(show:?enterRoom)\nThe door lock chimes. ]}\n\n|enterRoom)[[[Enter Room. -&gt;INT. Apartment B82-77]]]",
+      "links": [
+        {
+          "name": "Apt B82-73 ",
+          "link": "EXT. Apartment B82-73",
+          "pid": "4"
+        },
+        {
+          "name": "[Enter Room. ",
+          "link": "INT. Apartment B82-77",
+          "pid": "14"
+        }
+      ],
+      "name": "EXT. Apartment B82-77",
+      "pid": "7",
+      "position": {
+        "x": "484",
+        "y": "1037"
+      }
+    },
+    {
+      "text": "WIP. Dialog with misingperson/final scene. Explains how to fully become one with the machine and enter a new natural utopia. Probably have questioning dialog options on how you're just running away from reality. Utopia is the shorter ending whereas go home might have a bit more of a falling action talking to Clara and such.\n\n[[Utopia]]\n[[Go Home]]",
+      "links": [
+        {
+          "name": "Utopia",
+          "link": "Utopia",
+          "pid": "9"
+        },
+        {
+          "name": "Go Home",
+          "link": "Go Home",
+          "pid": "10"
+        }
+      ],
+      "name": "Inside the Network",
+      "pid": "8",
+      "position": {
+        "x": "835",
+        "y": "1120"
+      }
+    },
+    {
+      "text": "Utopia ending.",
+      "name": "Utopia",
+      "pid": "9",
+      "position": {
+        "x": "674",
+        "y": "1284"
+      }
+    },
+    {
+      "text": "End.",
+      "name": "Go Home",
+      "pid": "10",
+      "position": {
+        "x": "915",
+        "y": "1291"
+      }
+    },
+    {
+      "text": "\"Look, it's important to comment even the simplest code...|more)[ You might remember what it does now, but not at 4:50 PM on Friday afternoon, when you're about to push to production and a runtime error shows up in it.]\"\n\nYou (link-reveal:\"struggle to listen.\")[(show: ?more)] ",
+      "name": "ignoreme",
+      "pid": "11",
+      "position": {
+        "x": "188",
+        "y": "143"
+      }
+    },
+    {
+      "text": "(if: (passage:)'s tags contains \"hideHub\")[&lt;!--Do nothing--&gt;]\n(else:)[[[Go to hub -&gt;Hub Area]]]\n(if: (passage:)'s name is \"inventory\")[&lt;!--Do nothing--&gt;]\n(else-if: (passage:)'s tags contains \"hideinventory\")[&lt;!--Do nothing--&gt;]\n(else:)[&lt;hr&gt;&lt;br&gt;Check [[inventory]].]",
+      "links": [
+        {
+          "name": "[Go to hub ",
+          "link": "Hub Area",
+          "pid": "3"
+        },
+        {
+          "name": "inventory",
+          "link": "inventory",
+          "pid": "13"
+        }
+      ],
+      "name": "Footer",
+      "pid": "12",
+      "position": {
+        "x": "490",
+        "y": "123"
+      },
+      "tags": [
+        "footer"
+      ]
+    },
+    {
+      "text": "&lt;h2&gt;Inventory&lt;/h2&gt;\n\n(print: $inv)",
+      "name": "inventory",
+      "pid": "13",
+      "position": {
+        "x": "753",
+        "y": "119"
+      }
+    },
+    {
+      "text": "(link:\"Look around\")[The room layout is the same as yours of course, but almost completely barren. You wonder if there was some mistake and another repoman had already cleaned out the space.]\n\n(link:\"A note\")[A cryptic note from missingPerson WIP. Has to indicate that he is in danger but also allude to a breakthrough.]\n\n(if: $inv contains \"mpGame\")[(link: \"Run Game\")[(show:?runGame)]]\n\n|runGame)[Placeholder: Gamey elements with hacking into the game? Could be partially corrupted as well, minigame of uncorrupting the floppy.\n\n(link: \"on minigame solve\")[(show:?ghostMachine)]\n]\n\n|ghostMachine)[\nEstablishing secure connection....\n\nConnected to 100.55.800\n\nWIP: Dialog with \"ghost in machine\". It explains that the only way to understand is to show you. You neet to get a SEC-VIS from security.\n\nNote from Nic: Open to suggestions on this bit, basically looking for a reason to go back to security and do another thing there before leaving it for good, anyway:\n\n(link: \"on sec visited\")[(show:?enterTheMatrix)]]\n\n|enterTheMatrix)[ [[Put on the SEC-VIS -&gt;Inside the Network]]]",
+      "links": [
+        {
+          "name": "Put on the SEC-VIS ",
+          "link": "Inside the Network",
+          "pid": "8"
+        }
+      ],
+      "name": "INT. Apartment B82-77",
+      "pid": "14",
+      "position": {
+        "x": "781",
+        "y": "866"
+      }
+    },
+    {
+      "text": "Clara lets you in.\n\n{(link: \"Talk to Clara\")[\n\t(set: $availRooms to it + (a:\"The Newstand\"))\nWIP, bigger dialogue tree TK. Key points: even though everyone keeps moving around to different levels in the ESC there are ways to game the system to stay in the same place. MissingPerson, as a human-network engineer showed her how. He also was an avid collector of old-world media, the person at the news stand should have some still.]}\n\n(if: $inv contains \"mpGame\")[ (link: \"Show the game to clara\")[(show:?showGame)]]\n\n|showGame)[Dialogue WIP. Says she knows about this, m.p. had gotten really addicted to it recently. Kept saying there was more to it than just a crude empty world ful of ghosts.\n\nHint: try running the game. In [[Apt 77 -&gt;EXT. Apartment B82-77]]]",
+      "links": [
+        {
+          "name": "Apt 77 ",
+          "link": "EXT. Apartment B82-77",
+          "pid": "7"
+        }
+      ],
+      "name": "INT. Apartment B82-73",
+      "pid": "15",
+      "position": {
+        "x": "51",
+        "y": "917"
+      }
+    }
+  ],
+  "name": "AdventureXR – Cyberspace",
+  "startnode": "1",
+  "creator": "Twine",
+  "creator-version": "2.3.13",
+  "ifid": "B8CC7840-FDB3-4E38-80EA-A56247008D5A"
+}</pre>
+    <div id="storyData" style="display: none;">
+      <tw-storydata name="AdventureXR – Cyberspace" startnode="1" creator="Twine" creator-version="2.3.13" ifid="B8CC7840-FDB3-4E38-80EA-A56247008D5A" zoom="1" format="Twison" format-version="0.0.1" options="" hidden=""><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">
+.computer-text {
+  font-family: "Lucida Console", "Courier New", monospace;
+}</style><script role="script" id="twine-user-script" type="text/twine-javascript">
+
+</script><tw-passagedata pid="1" name="Start" tags="hideinventory hideHub" position="758,300" size="200,100">(set:
+ $inv to (a: "keycard"))
+(set: $keycardState to "broken")
+(set: $availRooms to (a: "EXT. Apartment B82-77"))
+Post Climate City. Lower Classes relegated to below sea level, while 
+upper classes are privileged with exposure to sunlight. Uniform 
+architecture, sturdy but narrow pyramids.
+
+
+
+&lt;img 
+src="https://cdn.discordapp.com/attachments/818234840214274101/821490463042568212/unknown.png"&gt;
+(link:
+ "About the world")[Our story takes place in The Eastern Statenal 
+Collective (E.S.C), a self sustaining megalopolis contained entirely 
+within climate controlled towers. The ESC's Mission Statement (predating
+ it's founding and construction) states that it, as well as it's 
+citizens, are strong in their independence, with an emphasis on "forging
+ their own path" and frequent mobility.
+
+Random stuff:
+
+* It is the norm for people to constantly be moving from floor to floor,
+ each floor has something slightly unique to shake things up, and the 
+core motivation for citizens is to reach the secure and luxurious upper 
+echelons of their society (a pipe dream).
+* Identity can be changed at will by it's citizens, anonymity is a right
+* Following the fracturing of the internet, the ESC has it's own unique 
+network: NetESC. All members are anonymous with no way of seeing a 
+throughline between posts (though job titles are shown when verification
+ is necessary)
+* Traditional social websites have been replaced with direct 
+communication between members.]
+---
+[[Start-&gt;Your Apartment]]</tw-passagedata><tw-passagedata pid="2" name="Your Apartment" tags="" position="802,486" size="100,100">Location:
+ Your Apartment
+(link:"Look around")[A compact living space, about 12 by 18 feet, 
+clearly designed to hold the most accomodation, (kitchen, bathroom, 
+sleeping area) in the most efficient space possible. It's decorated with
+ ''//TK//'' but it isn't enough to get rid of the mass produced reality 
+of the space. There is no natural light.&lt;br&gt;]
+(link:"Eat breakfast")[Another health drink sent via central piping and 
+into your cup. It apparently is called banana blast, though you wouldn't
+ know if the taste is accurate.&lt;br&gt;
+(link:"A chime at the computer")[The screen reads: new 
+assignment.&lt;br&gt;
+(link:"Check assignment")[&lt;span class="computer-text"&gt;"Good 
+Morning, TB. Good job on....&lt;/span&gt;
+(link:"uhh")[&lt;span class="computer-text"&gt;err: no item in 
+employee.assignmenthistory has attribute "commend"&lt;/span&gt;
+(link:"they really need to fix that.")[&lt;span 
+class="computer-text"&gt;Your assignment today is to clear out Apartment
+ B82-77. All items must be sorted for structure-wide recycling. 
+Additional Notes: "Please complete swiftly, a new citizen will move in 
+tomorrow morning" Thank you for your duty to our community. - E.S.C. 
+Central Relocation and Recyccling//Class Mobility and Human 
+Sustainability//&lt;/span&gt;&lt;br&gt;]]]]]</tw-passagedata><tw-passagedata pid="3" name="Hub Area" tags="" position="447,469" size="100,100">WIP - Connecting Space
+(if: $availRooms contains "EXT. Apartment B82-77")[ [[EXT. Apartment B82-77]]]
+(if: $availRooms contains "The Newstand")[ [[The Newstand]]]
+(if: $availRooms contains "Security Station")[ [[Security Station]]]
+(if: $availRooms contains "EXT. Apartment B82-73")[ [[EXT. Apartment B82-73]]]</tw-passagedata><tw-passagedata pid="4" name="EXT. Apartment B82-73" tags="undiscovered" position="257,1003" size="100,100">Apartment B82-73. Where missing person's friend is.
+
+(if: $door73 is "unlocked")[[[Knock on door. -&gt;INT. Apartment B82-73]]]</tw-passagedata><tw-passagedata pid="5" name="The Newstand" tags="" position="729,668" size="100,100">(link:
+ "Look around")[A standard newstand, at first glance. It's magazines, 
+however are just projected images from a screen.]
+(link: "Talk to attendant")[
+	(set: $inv to it + (a: "mpGame"))
+WIP. You takl about missing person The attendant lets you in on his 
+(predictable) conspiracy theory. Big bad took person for some reason 
+might have had something to do with this:
+
+The man at the newstand gives you a datastick labelled "s.c.-v1.6"
+
+It's a somewhat broken version of an old multiplayer game that belonged 
+to missingperson (massive multiplayer games were regulated for their 
+violation of the anonymity clause as well as addictive/escapist 
+tendencies). I'ts only playable with bots but says m.p. made some mods 
+to it
+
+Hint: show game to clara.].</tw-passagedata><tw-passagedata pid="6" name="Security Station" tags="" position="205,639" size="100,100">Security Station. WIP basically character front for the "corporation".
+
+(link: "DEV: Location Breakdown")[First reason for coming here is getting access to room 77.]
+
+(if: $keycardState is "broken")[(link: "Ask for access to Apt 77.")[(show: ?fix-keycard)]]
+|fix-keycard)[Dialogue WIP. Security personell gives you access and reinforces that all property is property of the corporation.
+(link:"Okay.")[(set: $keycardState to "fixed")]]
+(if: $keycardState is "fixed")[[[Go to hub. -&gt;Hub Area]]]</tw-passagedata><tw-passagedata pid="7" name="EXT. Apartment B82-77" tags="" position="484,1037" size="100,100">(if:
+ $door77 is "unlocked")[(show:?enterRoom)]
+Apartment B82-77, between B82-76 and B82-78.
+
+There's someone by the door.
+
+{(link: "Talk to them.")[
+	(set: $door73 to "unlocked")
+	(set: $availRooms to it + (a:"EXT. Apartment B82-73"))
+Dialogue TK. Citizen's friend, Clara. She's hiding something. Tells you 
+that he didn't move and didn't die. Knows that you have to recycle 
+everything, but hopes maybe she can keep something of whatever you find 
+in there? You  can talk to her in [[Apt B82-73 -&gt;EXT. Apartment 
+B82-73]]]}
+{(link: "Use keycard")[
+	(if: $keycardState is "broken")[(show:?locked)]
+	(else-if: $keycardState is "fixed")[(show:?unlocked)]
+	]}
+{|locked)[
+	(set: $availRooms to it + (a:"Security Station"))
+You bring your keycard to the door but it doesn't open. //You probably 
+need to get access at security//.]}
+{|unlocked)[
+	(set: $door77 to "unlocked")(show:?enterRoom)
+The door lock chimes. ]}
+
+|enterRoom)[[[Enter Room. -&gt;INT. Apartment B82-77]]]</tw-passagedata><tw-passagedata pid="8" name="Inside the Network" tags="" position="835,1120" size="100,100">WIP.
+ Dialog with misingperson/final scene. Explains how to fully become one 
+with the machine and enter a new natural utopia. Probably have 
+questioning dialog options on how you're just running away from reality.
+ Utopia is the shorter ending whereas go home might have a bit more of a
+ falling action talking to Clara and such.
+
+[[Utopia]]
+[[Go Home]]</tw-passagedata><tw-passagedata pid="9" name="Utopia" tags="" position="674,1284" size="100,100">Utopia ending.</tw-passagedata><tw-passagedata pid="10" name="Go Home" tags="" position="915,1291" size="100,100">End.</tw-passagedata><tw-passagedata pid="11" name="ignoreme" tags="" position="188,143" size="100,100">"Look,
+ it's important to comment even the simplest code...|more)[ You might 
+remember what it does now, but not at 4:50 PM on Friday afternoon, when 
+you're about to push to production and a runtime error shows up in it.]"
+
+You (link-reveal:"struggle to listen.")[(show: ?more)] </tw-passagedata><tw-passagedata pid="12" name="Footer" tags="footer" position="490,123" size="100,100">(if: (passage:)'s tags contains "hideHub")[&lt;!--Do nothing--&gt;]
+(else:)[[[Go to hub -&gt;Hub Area]]]
+(if: (passage:)'s name is "inventory")[&lt;!--Do nothing--&gt;]
+(else-if: (passage:)'s tags contains "hideinventory")[&lt;!--Do nothing--&gt;]
+(else:)[&lt;hr&gt;&lt;br&gt;Check [[inventory]].]</tw-passagedata><tw-passagedata pid="13" name="inventory" tags="" position="753,119" size="100,100">&lt;h2&gt;Inventory&lt;/h2&gt;
+
+(print: $inv)</tw-passagedata><tw-passagedata pid="14" name="INT. Apartment B82-77" tags="" position="781,866" size="100,100">(link:"Look
+ around")[The room layout is the same as yours of course, but almost 
+completely barren. You wonder if there was some mistake and another 
+repoman had already cleaned out the space.]
+
+(link:"A note")[A cryptic note from missingPerson WIP. Has to indicate 
+that he is in danger but also allude to a breakthrough.]
+
+(if: $inv contains "mpGame")[(link: "Run Game")[(show:?runGame)]]
+
+|runGame)[Placeholder: Gamey elements with hacking into the game? Could 
+be partially corrupted as well, minigame of uncorrupting the floppy.
+
+(link: "on minigame solve")[(show:?ghostMachine)]
+]
+
+|ghostMachine)[
+Establishing secure connection....
+
+Connected to 100.55.800
+
+WIP: Dialog with "ghost in machine". It explains that the only way to 
+understand is to show you. You neet to get a SEC-VIS from security.
+
+Note from Nic: Open to suggestions on this bit, basically looking for a 
+reason to go back to security and do another thing there before leaving 
+it for good, anyway:
+
+(link: "on sec visited")[(show:?enterTheMatrix)]]
+
+|enterTheMatrix)[ [[Put on the SEC-VIS -&gt;Inside the Network]]]</tw-passagedata><tw-passagedata pid="15" name="INT. Apartment B82-73" tags="" position="51,917" size="100,100">Clara
+ lets you in.
+
+{(link: "Talk to Clara")[
+	(set: $availRooms to it + (a:"The Newstand"))
+WIP, bigger dialogue tree TK. Key points: even though everyone keeps 
+moving around to different levels in the ESC there are ways to game the 
+system to stay in the same place. MissingPerson, as a human-network 
+engineer showed her how. He also was an avid collector of old-world 
+media, the person at the news stand should have some still.]}
+
+(if: $inv contains "mpGame")[ (link: "Show the game to 
+clara")[(show:?showGame)]]
+
+|showGame)[Dialogue WIP. Says she knows about this, m.p. had gotten 
+really addicted to it recently. Kept saying there was more to it than 
+just a crude empty world ful of ghosts.
+
+Hint: try running the game. In [[Apt 77 -&gt;EXT. Apartment B82-77]]]</tw-passagedata></tw-storydata>
+    </div>
+    <script>
+      Twison.convert();
+    </script>
+  
+
+<div>
+    <div id="twoseven-ext-tab-media-modal" class="twoseven-ext-tab-media-modal" style="display: none;">
+      <!-- Modal content -->
+      <div class="twoseven-ext-tab-media-modal-content">
+        <div class="iframe-container" style="height: 100%; width: 100%;">
+          <span class="close">×</span>
+        </div>
+      </div>
+    </div></div></body></html>

@@ -4,13 +4,17 @@
 		<script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/web2vr@1.1.1/dist/web2vr.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-      
+		<script type="text/json" src="story.json"></script>
+
 		<style>
 			#html-container {
 				position: absolute;
-				width: 200px;
+				width: 800;
 				background-color: gainsboro;
 				text-align: center;
+			}
+			#info {
+				font-size: 48px;
 			}
 		</style>
 	</head>
@@ -26,12 +30,15 @@
       </br>
 			<button id="btn">Advance</button>
 			
-		</div>
-        <script src="index.js"</script></script>
+	</div>
+		<script src="twineController.js"></script>
+        <script src="index.js"></script>
+
+
 
 		<script>
             
-            const web2vr = new Web2VR("#html-container")
+           const web2vr = new Web2VR("#html-container",{ position: { x: 0, y: 3, z: -2 }})
             web2vr.start()
 
         </script>
