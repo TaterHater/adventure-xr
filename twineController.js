@@ -27,6 +27,37 @@ getTwineHtml = (index) => {
   }
 
 parsePassage= (passage) => {
+  let returnHtml = ''
     //I need to take a string and build an HTML element with it. 
-    
+    //link make text appear
+    returnHtml+= passage.text + "\n"
+    passage.innerText.forEach(i => {
+     returnHtml +=  `<button class="accordion">${i.name}</button>
+      <div class="panel">
+        <p>${i.text}</p>
+      </div>`
+    });
+    return returnHtml
+}
+
+subButtonLogic = () => {
+  var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+	  console.log( `${i} clicked`)
+    /* Toggle between adding and removing the "active" class,
+    to highlight the button that controls the panel */
+    this.classList.toggle("active");
+
+    /* Toggle between hiding and showing the active panel */
+    var panel = this.nextElementSibling;
+    if (panel.style.display === "block") {
+      panel.style.display = "none";
+    } else {
+      panel.style.display = "block";
+    }
+  });
+}
 }

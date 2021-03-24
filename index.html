@@ -9,14 +9,35 @@
 		<style>
 			#html-container {
 				position: absolute;
-				width: 800;
+				width: 1000;
 				background-color: gainsboro;
 				text-align: center;
 			}
 			#info {
 				font-size: 48px;
 			}
+			.accordion {
+				background-color: #eee;
+				color: #444;
+				cursor: pointer;
+				padding: 18px;
+				width: 100%;
+				text-align: left;
+				border: none;
+				outline: none;
+				transition: 0.4s;
+			}
+			.panel {
+				padding: 0 18px;
+				background-color: white;
+				display: none;
+				overflow: hidden;
+			}	
+			.active, .accordion:hover {
+				background-color: #ccc;
+			}		
 		</style>
+
 	</head>
 
 	<body>
@@ -38,7 +59,7 @@
 
 		<script>
             
-           const web2vr = new Web2VR("#html-container",{ position: { x: 0, y: 3, z: -2 }})
+           const web2vr = new Web2VR("#html-container",{ position: { x: 0, y: 5, z: -2 }})
             web2vr.start()
 
         </script>
