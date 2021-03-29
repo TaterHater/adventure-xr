@@ -41,9 +41,13 @@
 	</head>
 
 	<body>
+    
         <a-scene>
-            <a-box position="-1 0.5 -3" rotation="0 20 0" color="#4CC3D9" id="box"></a-box>
-
+          <a-assets>
+            <a-asset-item id="pod01" src="https://cdn.glitch.com/778a69c0-2a27-44c3-9278-9fe7d3c6c84f%2FpodInterior.gltf?v=1616761897634"></a-asset-item>
+          </a-assets>
+            <!--a-box position="-1 0.5 -3" rotation="0 20 0" color="#4CC3D9" id="box"></a-box-->
+            <a-entity gltf-model = "#pod01"></a-entity>
         </a-scene>
 		<div id="html-container">
 			<h1>Welcome to Adventure XR</h1>
