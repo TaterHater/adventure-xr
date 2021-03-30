@@ -17,10 +17,6 @@ document.getElementById("btn").onclick = () => {
 	box1.setAttribute("position", { x: -1, y: 0, z: iter })
 	box1.object3D.position.set(-1 + iter, 0, -3)
 	subButtonLogic()
-	iter++ // TODO 
+	document.getElementById("button-list").innerHTML = generateNextPageButtons(story.passages[iter])
+	iter++ // TODO
 }
-
-
-
-
-

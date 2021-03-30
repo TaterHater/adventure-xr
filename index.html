@@ -46,7 +46,7 @@
           <a-assets>
             <a-asset-item id="pod01" src="https://cdn.glitch.com/778a69c0-2a27-44c3-9278-9fe7d3c6c84f%2FpodInterior.gltf?v=1616761897634"></a-asset-item>
           </a-assets>
-            <!--a-box position="-1 0.5 -3" rotation="0 20 0" color="#4CC3D9" id="box"></a-box-->
+            <a-box position="-1 0.5 -3" rotation="0 20 0" color="#4CC3D9" id="box"></a-box>
             <a-entity gltf-model = "#pod01"></a-entity>
         </a-scene>
 		<div id="html-container">
@@ -54,6 +54,9 @@
       <div id="info"></div>
       </br>
 			<button id="btn">Advance</button>
+			<div id="button-list">
+
+			</div>
 			
 	</div>
 		<script src="twineController.js"></script>
@@ -62,8 +65,9 @@
 
 
 		<script>
-            
-           const web2vr = new Web2VR("#html-container",{ position: { x: 0, y: 5, z: -2 }})
+            document.querySelector('[camera]').removeAttribute('wasd-controls');
+
+           const web2vr = new Web2VR("#html-container",{ position: { x: 0, y: 4, z: -1}})
             web2vr.start()
 
         </script>
