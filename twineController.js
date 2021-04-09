@@ -16,7 +16,7 @@ getTwineHtml = (index) => {
 loadJSON = (callback) => {
 	var xobj = new XMLHttpRequest()
 	xobj.overrideMimeType("application/json")
-	xobj.open("GET", "./twineExample.json", true)
+	xobj.open("GET", "./twineFinal.json", true)
 	xobj.onreadystatechange = function () {
 		if (xobj.readyState == 4 && xobj.status == "200") {
 			callback(JSON.parse(xobj.responseText))
@@ -24,18 +24,44 @@ loadJSON = (callback) => {
 	}
 	xobj.send(null)
 }
-
+/*
+passage has a 
+pid (number)
+name
+position (x,y)
+tags (string array)
+links (link: name, link (string), pid (to link to))
+*/
 parsePassage = (passage) => {
 	let returnHtml = ""
 	//I need to take a string and build an HTML element with it.
 	//link make text appear
 	returnHtml += passage.text + "\n"
-	passage.innerText.forEach((i) => {
-		returnHtml += `<button class="accordion">${i.name}</button>
-      <div class="panel">
-        <p>${i.text}</p>
-      </div>`
+	console.log(passage.links)
+	if (passage.links == null) return `<button id="btn">Advance</button>`
+	passage.links.forEach((i) => {
+		var test = `<button class="accordion">${i.name}</button>
+		<div class="panel">
+		  <p>${i.link}</p>
+		</div>`
+		if (i.pid) iter = i.pid
+		returnHtml += test
 	})
+	return returnHtml
+}
+
+accordianButtons = (passsage) => {
+	let returnHtml = ""
+
+	var res = passsage.text.split("(link:")
+	res.forEach((i) => {
+		var subSlice = i.split("[")
+		returnHtml += `<button class="accordion">${subSlice[0].replace(/\]/g,"")}</button>
+		<div class="panel">
+		  <p>${subSlice[1]}</p>
+		</div>`
+	})
+
 	return returnHtml
 }
 
@@ -62,14 +88,25 @@ subButtonLogic = () => {
 }
 
 generateNextPageButtons = (passage) => {
-  if(passage.links == null)
-  return `<button id="btn">Advance</button>`
+	let returnHtml = ""
+	console.log(passage)
+	if (passage.links == null) return `<button id="btn">Advance</button>`
 	passage.links.forEach((i) => {
-		let returnHtml = ""
-		returnHtml += `<button class="accordion">${i.name}</button>
+		returnHtml += `<button class="${i.pid}">${i.name}</button>
     <div class="panel">
       <p>${i.text}</p>
     </div>`
 	})
 	// take in a passage and generate a button for each instance of links
+	return returnHtml
+}
+dynamicSubButtonLogic = (passage) => {
+	passage.links.forEach((i) => {
+		var btnLink = document.getElementsByClassName(i.pid)
+		console.log(btnLink)
+		btnLink.addEventListener("click", function () {
+			console.log(`${i.pid} clicked`)
+			update()
+		})
+	})
 }

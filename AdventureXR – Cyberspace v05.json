@@ -1,0 +1,3354 @@
+<html><div style="display: none !important; position: static !important; top: 0px !important; left: 0px !important; width: 0px !important; height: 0px !important;" id="twoseven-scripts" data-info="Scripts added by TwoSeven extension"><script type="text/javascript" id="__tmpScript-131911748" data-added-by-two-seven="1">(function() {
+      window.twoseven = {};
+    })();</script><script type="text/javascript" id="__tmpScript-389267392" data-added-by-two-seven="1">(function() {
+      window.twoseven.waitForDOMNode = async function waitForDOMNode(e,t=document){e=e||{};const{type:n,value:o}=e;if(!n||!o)throw new Error("Must specify identifier");let s=o;switch(n){case"tag":s=o.toUpperCase()}if("check"!==n){const e=await i({type:"selector",value:s},[],t);if(e)return new Promise(t=>t(e))}async function i({type:e,value:t},n,o){let s;switch(e){case"tag":s=n.find(e=>e.tagName===t);break;case"selector":s=o.querySelector(t);break;case"check":for(const e of n){if(await t(e))return e}}return s}return new Promise((e,o)=>{const r=new MutationObserver(async o=>{for(const a of o)if("childList"===a.type){const o=Array.from(a.addedNodes),c=await i({type:n,value:s},o,t);if(c)return r.disconnect(),e(c)}});r.observe(t,{childList:!0,subtree:!0})})};
+    })();</script><script type="text/javascript" id="__tmpScript-327757793" data-added-by-two-seven="1">(function() {
+      
+  window.twoseven.reportError = function reportError(e,t,n){"string"==typeof(n=n||{})&&(n={message:n});const{message:o,stack:s}=t;Object.assign(n,{tag:e,error:{message:o,stack:s}}),window.tsExtGetPostToParent()({name:name,tag:e,action:"report-error",json:n}),console.error(JSON.stringify(n.error))}
+;
+    })();</script><script type="text/javascript" id="__tmpScript-752275430" data-added-by-two-seven="1">(function() {
+      
+  window.twosevenHmsToSecondsOnly = function(str) {
+      var p = str.split(':'),
+          s = 0, m = 1;
+
+      while (p.length > 0) {
+          s += m * parseInt(p.pop(), 10);
+          m *= 60;
+      }
+
+      return s;
+  }
+;
+    })();</script><script type="text/javascript" id="__tmpScript-272128407" data-added-by-two-seven="1">(function() {
+      window.twosevenExtLog = function twosevenExtLog(e,o,c){o||(o=e,e=void 0);let n=c||"black";if(c)switch(c){case"success":n="Green";break;case"info":n="DodgerBlue";break;case"error":n="Red";break;case"warning":n="Orange";break;default:n=c}e?console.log("%c"+e+": "+o,`color:${n}`):console.log("%c"+o,`color:${n}`)};
+    })();</script><script type="text/javascript" id="__tmpScript-339627619" data-added-by-two-seven="1">(function() {
+      
+  document.twosevenGET = function(url, callback) {
+    var xmlhttp = new XMLHttpRequest();
+
+    xmlhttp.onreadystatechange = function() {
+      if (xmlhttp.readyState == XMLHttpRequest.DONE ) {
+        if (xmlhttp.status == 200) {
+          callback(null, xmlhttp.responseText);
+        } else {
+          callback('something else other than 200 was returned', '');
+        }
+      }
+    };
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+  };
+;
+    })();</script><script type="text/javascript" id="__tmpScript-593480536" data-added-by-two-seven="1">(function() {
+      
+  window.triggerEvent = function(e,t,n,o=!1){let s;o?(n&&"string"!=typeof n&&(n=JSON.stringify(n)),s=n):s={data:n},window.twosevenScriptsDiv&&n&&"object"==typeof n&&(console.warn(`WARNING: Attempting to send an object via event.detail from CS->Page does not work on Firefox: ${JSON.stringify(n)}`),console.error((new Error).stack));var i=new CustomEvent(t,{bubbles:!0,composed:!0,detail:s});e.dispatchEvent(i)}
+;
+    })();</script><script type="text/javascript" id="__tmpScript-473454022" data-added-by-two-seven="1">(function() {
+      window.twoseven.postTo = async function postTo(e,t,n=!1){let o;return t.name=t.name||name,o=n?new Promise(e=>{const n=`ack-${t.action}-${1e9*Math.random()|0}`;t.ack={event:n};window.debug&&["play","pause","currentTime"].some(e=>t.action.includes(e)),window.addEventListener("message",function t({data:o={}}){o.action===n&&(window.removeEventListener("message",t),e(o.json))})}):new Promise(e=>e()),e.postMessage(t,"*"),o};
+    })();</script><script type="text/javascript" id="__tmpScript-491352453" data-added-by-two-seven="1">(function() {
+      window.tsExtGetPostTo = function tsExtGetPostTo(){return window.twoseven&&window.twoseven.postTo||window.postTo};
+    })();</script><script type="text/javascript" id="__tmpScript-731528073" data-added-by-two-seven="1">(function() {
+      window.tsExtGetPostToParent = function tsExtGetPostToParent(){return window.twoseven&&window.twoseven.postToParent||window.postToParent};
+    })();</script><script type="text/javascript" id="__tmpScript-365868465" data-added-by-two-seven="1">(function() {
+      window.twoseven.postResponse = async function postResponse(e,t){const{source:n,data:{ack:{event:o}}}=e;window.tsExtGetPostTo()(n,{action:o,json:t})};
+    })();</script><script type="text/javascript" id="__tmpScript-389521065" data-added-by-two-seven="1">(function() {
+      window.twoseven.postToParent = async function postToParent(e,t=!1){return window.tsExtGetPostTo()(window.parent,e,t)};
+    })();</script><script type="text/javascript" id="__tmpScript-904147186" data-added-by-two-seven="1">(function() {
+      window.twoseven.postToTop = async function postToTop(e,t=!1){return window.tsExtGetPostTo()(window.top,e,t)};
+    })();</script><script type="text/javascript" id="__tmpScript-999090384" data-added-by-two-seven="1">(function() {
+      
+  window.twoseven.getFromStorage = e=>new Promise((t,n)=>{const o="get-from-storage-"+(1e9*Math.random()|0);window.addEventListener(o,e=>{window.removeEventListener(o,this);const{detail:{data:{value:n}}}=e;t(n)}),triggerEvent(window,"get-from-storage",{key:e,evt:o})})
+  window.twoseven.saveToStorage = e=>{triggerEvent(window,"save-to-storage",e)}
+;
+    })();</script><script type="text/javascript" id="__tmpScript-778996994" data-added-by-two-seven="1">(function() {
+      
+  function attachHistoryListeners(){var e=history.pushState;history.pushState=function(t,n,o){return"function"==typeof history.onpushstate&&history.onpushstate({state:t}),triggerEvent(window,"pushstate",{uri:o}),e.apply(history,arguments)};var t=history.replaceState;history.replaceState=function(e){return"function"==typeof history.onreplacestate&&history.onreplacestate({state:e}),t.apply(history,arguments)}}
+  attachHistoryListeners()
+;
+    })();</script><script type="text/javascript" id="__tmpScript-130631654" data-added-by-two-seven="1">(function() {
+      window.twoseven.once = function once(e,t,n){e.addEventListener(t,function o(s){e.removeEventListener(t,o),n(s)})};
+    })();</script><script type="text/javascript" id="__tmpScript-930617648" data-added-by-two-seven="1">(function() {
+      
+  window.twoseven.isOnTwoSevenTab = async () => {
+    const result = await window.twoseven.postTo(window, { action: 'is-on-twoseven-tab' }, true)
+    return result
+  }
+;
+    })();</script><script type="text/javascript" id="__tmpScript-52428473" data-added-by-two-seven="1">(function() {
+      
+  window.twoseven.isPaused = async () => {
+    const result = await window.twoseven.postTo(window, { action: 'twoseven:pause-state' }, true)
+    return result
+  }
+;
+    })();</script><script type="text/javascript" id="__tmpScript-561538137" data-added-by-two-seven="1">(function() {
+      
+      const modal = document.querySelector('.twoseven-ext-tab-media-modal')
+      const modalCloseBtn = modal.querySelector('.close')
+      function closeModal () {
+        modal.style.display = 'none'
+        const frame = document.querySelector('#twoseven-ext-tab-media-iframe').contentWindow
+        frame.postMessage({
+          __evt_name: 'modal-hide'
+        }, '*')
+      }
+      modalCloseBtn.onclick = closeModal
+
+      window.onmessage = function (e) {
+        if (e.data.__evt_name === 'modal-hide') {
+          closeModal()
+        }
+      }
+
+      window.twoseven.closeTabMediaModal = closeModal
+
+      window.onclick = function (e) {
+        if (e.target.id === 'twoseven-ext-tab-media-modal' && modal.style.display === 'block') {
+            closeModal()
+        }
+      }
+    ;
+    })();</script></div><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>AdventureXR – Cyberspace v0.5_Simplified</title>
+    <script type="text/javascript">
+      /**
+       * Twison - Twine 2 JSON Export Story Format
+       *
+       * Copyright (c) 2015 Em Walker
+       * https://lazerwalker.com
+       *
+       * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+       * associated documentation files (the "Software"), to deal in the Software without restriction,
+       * including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+       * and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
+       * subject to the following conditions:
+       *
+       * The above copyright notice and this permission notice shall be included in all copies or substantial
+       * portions of the Software.
+       *
+       * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
+       * LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+       * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+       * WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+       * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+       */
+      var Twison={extractLinksFromText:function(t){var n=t.match(/\[\[.+?\]\]/g);return n?n.map(function(t){var n=t.match(/\[\[(.*?)\-\&gt;(.*?)\]\]/);return n?{name:n[1],link:n[2]}:(t=t.substring(2,t.length-2),{name:t,link:t})}):null},extractPropsFromText:function(t){var n,r={},e=!1;const a=/\{\{((\s|\S)+?)\}\}((\s|\S)+?)\{\{\/\1\}\}/gm;for(;null!==(n=a.exec(t));){const o=n[1],s=n[3].replace(/(\r\n|\n|\r)/gm,""),i=this.extractPropsFromText(s);r[o]=null!==i?i:s,e=!0}return e?r:null},convertPassage:function(t){var n={text:t.innerHTML},r=Twison.extractLinksFromText(n.text);r&&(n.links=r);const e=Twison.extractPropsFromText(n.text);if(e&&(n.props=e),["name","pid","position","tags"].forEach(function(r){var e=t.attributes[r].value;e&&(n[r]=e)}),n.position){var a=n.position.split(",");n.position={x:a[0],y:a[1]}}return n.tags&&(n.tags=n.tags.split(" ")),n},convertStory:function(t){var n=t.getElementsByTagName("tw-passagedata"),r=Array.prototype.slice.call(n).map(Twison.convertPassage),e={passages:r};["name","startnode","creator","creator-version","ifid"].forEach(function(n){var r=t.attributes[n].value;r&&(e[n]=r)});var a={};return e.passages.forEach(function(t){a[t.name]=t.pid}),e.passages.forEach(function(t){t.links&&t.links.forEach(function(t){t.pid=a[t.link],t.pid||(t.broken=!0)})}),e},convert:function(){var t=document.getElementsByTagName("tw-storydata")[0],n=JSON.stringify(Twison.convertStory(t),null,2);document.getElementById("output").innerHTML=n}};window.Twison=Twison;
+    </script>
+  <link href="AdventureXR%20%E2%80%93%20Cyberspace%20v05_files/modal.css" rel="stylesheet" id="__tmpStyle"></head>
+  <body>
+    <pre id="output">{
+  "passages": [
+    {
+      "text": "{\n&lt;!--THIS IS THE INTRODUCTION--&gt;\n&lt;!--Imagine: The Bathosphere intro in Bioshock.--&gt;\n\n&lt;!--set variables--&gt;\n(set: $playerName to \"Lanier\")\n(set: $inv to (a:)) &lt;!--inventory--&gt;\n(set: $availLinks to (a:))}\n\n&lt;div class:\"forDevsOnly\"&gt;\n#TEMP: For Devs:\nVisual: Exterior of the City.\nAssets: City Exterior Model.\n&lt;img src=\"https://cdn.discordapp.com/attachments/818234840214274101/821490463042568212/unknown.png\"&gt;\n\nPost Climate City. Lower Classes relegated to below sea level, while upper classes are privileged with exposure to sunlight. Uniform architecture, sturdy but narrow pyramids.\n\n(link: \"About the world\")[Our story takes place in The Eastern Statenal Collective (E.S.C), a self sustaining megalopolis contained entirely within climate controlled towers. The ESC's Mission Statement (predating it's founding and construction) states that it, as well as it's citizens, are strong in their independence, with an emphasis on \"forging their own path\" and frequent mobility.\n\nRandom stuff:\n\n* It is the norm for people to constantly be moving from floor to floor, each floor has something slightly unique to shake things up, and the core motivation for citizens is to reach the secure and luxurious upper echelons of their society (a pipe dream).\n* Identity can be changed at will by it's citizens, anonymity is a right\n* Following the fracturing of the internet, the ESC has it's own unique network: NetESC. All members are anonymous with no way of seeing a throughline between posts (though job titles are shown when verification is necessary)\n* Traditional social websites have been replaced with direct communication between members.]\n&lt;/div&gt;\n\n---\n[[Start-&gt;playerApt-intro]]",
+      "links": [
+        {
+          "name": "Start",
+          "link": "playerApt-intro",
+          "pid": "2"
+        }
+      ],
+      "name": "Introduction",
+      "pid": "1",
+      "position": {
+        "x": "6000",
+        "y": "600"
+      },
+      "tags": [
+        "code_array"
+      ]
+    },
+    {
+      "text": "&lt;div data-location=\"playerApt\"&gt;\n&lt;h1 class=\"locationHeader\"&gt;Your Apartment&lt;/h1&gt;\n\nThe room shudders as it docks into yet another floor of the monolithic complex.\n\"Good Morning, $playerName. You are docked in Block B82-CC today. We will remain here until the completion of your work assignment.\"\n\n[[Look around. -&gt;playerApt]]\n&lt;/div&gt;",
+      "links": [
+        {
+          "name": "Look around. ",
+          "link": "playerApt",
+          "pid": "15"
+        }
+      ],
+      "name": "playerApt-intro",
+      "pid": "2",
+      "position": {
+        "x": "6500",
+        "y": "900"
+      },
+      "tags": [
+        "loc_playerApt"
+      ]
+    },
+    {
+      "text": "&lt;!-------------------------------CONTENT----------------------------------&gt;\n&lt;h1 class=\"locationHeader\"&gt;Outside of Nicola's Apartment (B82-73)&lt;/h1&gt;\n\n[[Knock on the door. -&gt;friendApt]]",
+      "links": [
+        {
+          "name": "Knock on the door. ",
+          "link": "friendApt",
+          "pid": "13"
+        }
+      ],
+      "name": "friendAptExt",
+      "pid": "3",
+      "position": {
+        "x": "5500",
+        "y": "2400"
+      },
+      "tags": [
+        "loc_friendAptExt"
+      ]
+    },
+    {
+      "text": "You step down a few steps and into a bar.\n\nThe space is tiny, holding only about 3 people at the bar itself. A TV shows some long past sports game. Behind the counter lies a robotic device with arms and a spout.\n\n[[Take a seat.-&gt;bar-autoBartender-00]]",
+      "links": [
+        {
+          "name": "Take a seat.",
+          "link": "bar-autoBartender-00",
+          "pid": "64"
+        }
+      ],
+      "name": "bar-intro",
+      "pid": "4",
+      "position": {
+        "x": "5500",
+        "y": "1525"
+      },
+      "tags": [
+        "loc_bar"
+      ]
+    },
+    {
+      "text": "You approach the security desk.\n\n[[Look around.-&gt;security]]\n\n(set: $availLinks to it - (a:\"security-intro\"))\n(set: $availLinks to it + (a:\"security\"))",
+      "links": [
+        {
+          "name": "Look around.",
+          "link": "security",
+          "pid": "45"
+        }
+      ],
+      "name": "security-intro",
+      "pid": "5",
+      "position": {
+        "x": "5500",
+        "y": "900"
+      },
+      "tags": [
+        "loc_security",
+        "code_array"
+      ]
+    },
+    {
+      "text": "&lt;h1 class=\"locationHeader\"&gt;Outside of Apartment B82-77&lt;/h1&gt;\n\nApartment B82-77, between B82-76 and B82-78.\n\n(if: $inv contains \"Fixed Keycard\")[ [[Use keycard.-&gt;mysteryAptExt-unlocked]] ]\n(else:)[[[Use keycard.-&gt;mysteryAptExt-lockedDoor]]]\n\n[[Go to hub.-&gt;hub]]",
+      "links": [
+        {
+          "name": "Use keycard.",
+          "link": "mysteryAptExt-unlocked",
+          "pid": "44"
+        },
+        {
+          "name": "[Use keycard.",
+          "link": "mysteryAptExt-lockedDoor",
+          "pid": "43"
+        },
+        {
+          "name": "Go to hub.",
+          "link": "hub",
+          "pid": "31"
+        }
+      ],
+      "name": "mysteryAptExt",
+      "pid": "6",
+      "position": {
+        "x": "6500",
+        "y": "2200"
+      },
+      "tags": [
+        "loc_mysteryAptExt",
+        "code_gate"
+      ]
+    },
+    {
+      "text": "WIP. Dialog with misingperson/final scene. Explains how to fully become one with the machine and enter a new natural utopia. Probably have questioning dialog options on how you're just running away from reality. Utopia is the shorter ending whereas go home might have a bit more of a falling action talking to Nicola and such.\n\n[[Utopia]]\n[[Go Home]]",
+      "links": [
+        {
+          "name": "Utopia",
+          "link": "Utopia",
+          "pid": "8"
+        },
+        {
+          "name": "Go Home",
+          "link": "Go Home",
+          "pid": "9"
+        }
+      ],
+      "name": "Inside the Network",
+      "pid": "7",
+      "position": {
+        "x": "6450",
+        "y": "3575"
+      }
+    },
+    {
+      "text": "Utopia ending.",
+      "name": "Utopia",
+      "pid": "8",
+      "position": {
+        "x": "6650",
+        "y": "3500"
+      }
+    },
+    {
+      "text": "End.",
+      "name": "Go Home",
+      "pid": "9",
+      "position": {
+        "x": "6650",
+        "y": "3625"
+      }
+    },
+    {
+      "text": "\"Look, it's important to comment even the simplest code...|more)[ You might remember what it does now, but not at 4:50 PM on Friday afternoon, when you're about to push to production and a runtime error shows up in it.]\"\n\nYou (link-reveal:\"struggle to listen.\")[(show: ?more)] ",
+      "name": "ignoreme",
+      "pid": "10",
+      "position": {
+        "x": "4300",
+        "y": "575"
+      }
+    },
+    {
+      "text": "&lt;h2&gt;Inventory&lt;/h2&gt;\n\n(if: $inv contains \"Water Bottle\")[ [[inventory-water]] ]\n(if: $inv contains \"Note from Lee\")[ [[inventory-note]] ]\n(if: $inv contains \"Video Game\")[ [[inventory-game]] ]\n(if: $inv contains \"Keycard\")[ [[inventory-keycard]] ]\n(else-if: $inv contains \"Broken Keycard\")[ [[inventory-brokenKeycard]] ]\n(else-if: $inv contains \"Fixed Keycard\")[ [[inventory-fixedKeycard]] ]\n(if: $inv contains \"Hard Drive\")[ [[inventory-backupDrive]] ]\n\n\n(print: $inv)",
+      "links": [
+        {
+          "name": "inventory-water",
+          "link": "inventory-water",
+          "pid": "94"
+        },
+        {
+          "name": "inventory-note",
+          "link": "inventory-note",
+          "pid": "76"
+        },
+        {
+          "name": "inventory-game",
+          "link": "inventory-game",
+          "pid": "95"
+        },
+        {
+          "name": "inventory-keycard",
+          "link": "inventory-keycard",
+          "pid": "96"
+        },
+        {
+          "name": "inventory-brokenKeycard",
+          "link": "inventory-brokenKeycard",
+          "pid": "97"
+        },
+        {
+          "name": "inventory-fixedKeycard",
+          "link": "inventory-fixedKeycard",
+          "pid": "98"
+        },
+        {
+          "name": "inventory-backupDrive",
+          "link": "inventory-backupDrive",
+          "pid": "99"
+        }
+      ],
+      "name": "inventory",
+      "pid": "11",
+      "position": {
+        "x": "5400",
+        "y": "100"
+      },
+      "tags": [
+        "code_gate"
+      ]
+    },
+    {
+      "text": "&lt;h1 class=\"locationHeader\"&gt;Lee's Apartment&lt;/h1&gt;\n\nThere's very little out of the ordinary in this room, with it's layout being nearly identical to yours. It's nearly impeccably clean, aside from a broken flowerpot below a dark window. Behind the bed is a decoration screen.\n\n[[Inspect drawers.-&gt;mysteryApt-drawers]]\n[[Look at window.-&gt;mysteryApt-window]]\n[[Look at screen.-&gt;mysteryApt-screen]]\n[[Look at computer.-&gt;mysteryApt-computer]]",
+      "links": [
+        {
+          "name": "Inspect drawers.",
+          "link": "mysteryApt-drawers",
+          "pid": "71"
+        },
+        {
+          "name": "Look at window.",
+          "link": "mysteryApt-window",
+          "pid": "72"
+        },
+        {
+          "name": "Look at screen.",
+          "link": "mysteryApt-screen",
+          "pid": "108"
+        },
+        {
+          "name": "Look at computer.",
+          "link": "mysteryApt-computer",
+          "pid": "73"
+        }
+      ],
+      "name": "mysteryApt",
+      "pid": "12",
+      "position": {
+        "x": "6500",
+        "y": "2650"
+      },
+      "tags": [
+        "loc_mysteryApt"
+      ]
+    },
+    {
+      "text": "&lt;h1 class=\"locationHeader\"&gt;Nicola's Apartment&lt;/h1&gt;\n\nNicola lets you in.\n\nIt's identical in design and layout to yours. Near the corner is a work bench littered with wires, small parts and pieces of silicon. There are drawings above the bench – a murky view of the E.S.C. and a portrait of a thin, short-haired man.\n\n(if: $availLinks contains \"friendApt-meetNicola-00\")[ [[Talk to Nicola-&gt;friendApt-meetNicola-00]] ]\n(else:)[ [[Talk to Nicola-&gt;friendApt-talkNicola]] ]",
+      "links": [
+        {
+          "name": "Talk to Nicola",
+          "link": "friendApt-meetNicola-00",
+          "pid": "53"
+        },
+        {
+          "name": "Talk to Nicola",
+          "link": "friendApt-talkNicola",
+          "pid": "92"
+        }
+      ],
+      "name": "friendApt",
+      "pid": "13",
+      "position": {
+        "x": "5500",
+        "y": "2700"
+      },
+      "tags": [
+        "loc_friendApt",
+        "code_gate"
+      ]
+    },
+    {
+      "text": "{&lt;div data-location=\"location\"&gt;\n&lt;!---------------------------------CODE-----------------------------------&gt;\n&lt;!--First Time datamap initialization--&gt;\n(if: $rm_LOCATION's timesVisited &lt; 1)[\n\t&lt;!--set array of items available to pickup in room--&gt;\n\t(set: $rm_LOCATION's items to it + (a:))\n\t(set: $rm_LOCATION's actions to it + (a:))\n\t&lt;!----&gt;\n]\n\n&lt;!--Runs Every Room Visit--&gt;\n(set: $rm_LOCATION's timesVisited to it + 1)\n}\n&lt;!-------------------------------CONTENT----------------------------------&gt;\n&lt;h1 class=\"locationHeader\"&gt;Room Titlet&lt;/h1&gt;\n\n(link:\"Look around.\")[Room Desc&lt;br&gt;]\n&lt;/div&gt;&lt;!--At end of passage--&gt;",
+      "name": "Room Template",
+      "pid": "14",
+      "position": {
+        "x": "4500",
+        "y": "575"
+      }
+    },
+    {
+      "text": "&lt;h1 class=\"locationHeader\"&gt;Your Apartment&lt;/h1&gt;\n\n&lt;h3 class=\"clickedAction\"&gt;You look around.&lt;/h3&gt;\n\nYour modest mobile apartment. Designed to move with you around the E.S.C. and hold the most accomodation in the most efficient space possible. A plastic house plant is on the desk, by the computer. A nutrition station sits along the far wall.\n\n[[Look at plant. -&gt;playerApt-lookAtPlant]]\n[[Order Food. -&gt;playerApt-nutritionStation]]\n[[Bed. -&gt;playerApt-Bed]]\n[[Check Computer. -&gt;playerApt-computer]]\n\n(if: $availLinks contains \"hub\")[ [[Go to Hub. -&gt;hub]] ]\n(else-if: $availLinks contains \"hub-intro\")[ [[Leave room. -&gt;hub-intro]] ]",
+      "links": [
+        {
+          "name": "Look at plant. ",
+          "link": "playerApt-lookAtPlant",
+          "pid": "16"
+        },
+        {
+          "name": "Order Food. ",
+          "link": "playerApt-nutritionStation",
+          "pid": "17"
+        },
+        {
+          "name": "Bed. ",
+          "link": "playerApt-Bed",
+          "pid": "18"
+        },
+        {
+          "name": "Check Computer. ",
+          "link": "playerApt-computer",
+          "pid": "19"
+        },
+        {
+          "name": "Go to Hub. ",
+          "link": "hub",
+          "pid": "31"
+        },
+        {
+          "name": "Leave room. ",
+          "link": "hub-intro",
+          "pid": "30"
+        }
+      ],
+      "name": "playerApt",
+      "pid": "15",
+      "position": {
+        "x": "6500",
+        "y": "1025"
+      },
+      "tags": [
+        "loc_playerApt",
+        "code_gate"
+      ]
+    },
+    {
+      "text": "&lt;h1 class=\"locationHeader\"&gt;Your Apartment&lt;/h1&gt;\n\nIt's not much, but it's something to make this place feel a little more like a home. One day, when you get to dock in a level that has sunlight, you'll splurge and buy a real, living, one.\n\n[[Go Back. -&gt;playerApt]]",
+      "links": [
+        {
+          "name": "Go Back. ",
+          "link": "playerApt",
+          "pid": "15"
+        }
+      ],
+      "name": "playerApt-lookAtPlant",
+      "pid": "16",
+      "position": {
+        "x": "6800",
+        "y": "775"
+      },
+      "tags": [
+        "loc_playerApt",
+        "subloc_plant"
+      ]
+    },
+    {
+      "text": "&lt;h1 class=\"locationHeader\"&gt;Your Apartment&lt;/h1&gt;\n\n&lt;h3 class=\"clickedAction\"&gt;You visit the nutrition station.&lt;/h3&gt;\n\nWhat do you order?\n[[Banana Blast (.015 eC)-&gt;playerApt-nutritionStation-banana]]\n[[CarboFill (.005 eC)-&gt;playerApt-nutritionStation-carb]]\n[[Joyful Green (.010 eC)-&gt;playerApt-nutritionStation-joyful]]\n[[Go Back. -&gt;playerApt]]",
+      "links": [
+        {
+          "name": "Banana Blast (.015 eC)",
+          "link": "playerApt-nutritionStation-banana",
+          "pid": "20"
+        },
+        {
+          "name": "CarboFill (.005 eC)",
+          "link": "playerApt-nutritionStation-carb",
+          "pid": "21"
+        },
+        {
+          "name": "Joyful Green (.010 eC)",
+          "link": "playerApt-nutritionStation-joyful",
+          "pid": "22"
+        },
+        {
+          "name": "Go Back. ",
+          "link": "playerApt",
+          "pid": "15"
+        }
+      ],
+      "name": "playerApt-nutritionStation",
+      "pid": "17",
+      "position": {
+        "x": "6800",
+        "y": "1025"
+      },
+      "tags": [
+        "itemInteraction",
+        "loc_playerApt",
+        "subloc_nutrition"
+      ]
+    },
+    {
+      "text": "&lt;h1 class=\"locationHeader\"&gt;Your Apartment&lt;/h1&gt;\n\n&lt;h3 class=\"clickedAction\"&gt;You go to your bed.&lt;/h3&gt;\n\nNothing more than a synthetic mattress and a sheet.\n\n[[Go Back. -&gt;playerApt]]",
+      "links": [
+        {
+          "name": "Go Back. ",
+          "link": "playerApt",
+          "pid": "15"
+        }
+      ],
+      "name": "playerApt-Bed",
+      "pid": "18",
+      "position": {
+        "x": "6800",
+        "y": "900"
+      },
+      "tags": [
+        "loc_playerApt",
+        "subloc_bed"
+      ]
+    },
+    {
+      "text": "&lt;h1 class=\"locationHeader\"&gt;Your Apartment&lt;/h1&gt;\n\nYou turn the computer on.\n\n(if: $inv contains \"Keycard\")[\n\t[[Review assignment.-&gt;playerApt-computer-reviewAssign]]\n]\n(else:)[\n\t[[Check new assignment.-&gt;playerApt-computer-newAssign-00]]\n]\n[[Check ESC-NET.-&gt;playerApt-computer-net]]\n[[Check ESC-Chart.-&gt;playerApt-computer-chart]]\n[[Log off. -&gt;playerApt]]",
+      "links": [
+        {
+          "name": "Review assignment.",
+          "link": "playerApt-computer-reviewAssign",
+          "pid": "29"
+        },
+        {
+          "name": "Check new assignment.",
+          "link": "playerApt-computer-newAssign-00",
+          "pid": "23"
+        },
+        {
+          "name": "Check ESC-NET.",
+          "link": "playerApt-computer-net",
+          "pid": "25"
+        },
+        {
+          "name": "Check ESC-Chart.",
+          "link": "playerApt-computer-chart",
+          "pid": "24"
+        },
+        {
+          "name": "Log off. ",
+          "link": "playerApt",
+          "pid": "15"
+        }
+      ],
+      "name": "playerApt-computer",
+      "pid": "19",
+      "position": {
+        "x": "6800",
+        "y": "1300"
+      },
+      "tags": [
+        "itemInteraction",
+        "loc_playerApt",
+        "subloc_computer",
+        "code_gate"
+      ]
+    },
+    {
+      "text": "&lt;h1 class=\"locationHeader\"&gt;Your Apartment&lt;/h1&gt;\n\nAnother health drink sent via central piping and into your cup. It apparently is called banana blast. The taste might be accurate to it's name but you don't know for sure.\n\n[[Back. -&gt;playerApt]]",
+      "links": [
+        {
+          "name": "Back. ",
+          "link": "playerApt",
+          "pid": "15"
+        }
+      ],
+      "name": "playerApt-nutritionStation-banana",
+      "pid": "20",
+      "position": {
+        "x": "7100",
+        "y": "900"
+      },
+      "tags": [
+        "dialogChoice",
+        "loc_playerApt"
+      ]
+    },
+    {
+      "text": "&lt;h1 class=\"locationHeader\"&gt;Your Apartment&lt;/h1&gt;\n\nAnother drink sent via central piping and into your cup. It's thick and tough to choke down, but you can't complain for only .005 eC.\n\n[[Back. -&gt;playerApt]]",
+      "links": [
+        {
+          "name": "Back. ",
+          "link": "playerApt",
+          "pid": "15"
+        }
+      ],
+      "name": "playerApt-nutritionStation-carb",
+      "pid": "21",
+      "position": {
+        "x": "7100",
+        "y": "1025"
+      },
+      "tags": [
+        "dialogChoice",
+        "loc_playerApt"
+      ]
+    },
+    {
+      "text": "&lt;h1 class=\"locationHeader\"&gt;Your Apartment&lt;/h1&gt;\n\nAnother drink sent via central piping and into your cup. It's filling but there's something off-putting about it. Maybe algae just isn't compatible with your palette.\n\n[[Back. -&gt;playerApt]]",
+      "links": [
+        {
+          "name": "Back. ",
+          "link": "playerApt",
+          "pid": "15"
+        }
+      ],
+      "name": "playerApt-nutritionStation-joyful",
+      "pid": "22",
+      "position": {
+        "x": "7100",
+        "y": "1150"
+      },
+      "tags": [
+        "dialogChoice",
+        "loc_playerApt"
+      ]
+    },
+    {
+      "text": "&lt;h1 class=\"locationHeader\"&gt;Your Apartment&lt;/h1&gt;\n\nYou read the briefing on your assignment for the day.\n\n&lt;div class=\"computer-text\"&gt;\"Good Morning, $playerName. Your room has been fitted to level B82-CC. Tomorrow you will be transferred to B80-DE. E.S.C. Relocation &amp; Recycling would like to thank you for a good job on....&lt;/div&gt;\n\n[[uhh.-&gt;playerApt-computer-newAssign-01]]",
+      "links": [
+        {
+          "name": "uhh.",
+          "link": "playerApt-computer-newAssign-01",
+          "pid": "26"
+        }
+      ],
+      "name": "playerApt-computer-newAssign-00",
+      "pid": "23",
+      "position": {
+        "x": "7100",
+        "y": "1550"
+      },
+      "tags": [
+        "loc_playerApt",
+        "subloc_computer"
+      ]
+    },
+    {
+      "text": "&lt;h1 class=\"locationHeader\"&gt;Your Apartment&lt;/h1&gt;\n\nYou check your ESC-CHART Dashboard.\n\nescCoin Balance: 24.983 eC.\nCurrent Dock: B82-CC.\n\nMerit challenges:\n• Complete 30 assignments in 30 days for a 30% merit boost.\n\t- Completion:0/30\n\n[[Go back. -&gt;playerApt-computer]]\n[[Log off. -&gt;playerApt]]",
+      "links": [
+        {
+          "name": "Go back. ",
+          "link": "playerApt-computer",
+          "pid": "19"
+        },
+        {
+          "name": "Log off. ",
+          "link": "playerApt",
+          "pid": "15"
+        }
+      ],
+      "name": "playerApt-computer-chart",
+      "pid": "24",
+      "position": {
+        "x": "7100",
+        "y": "1425"
+      },
+      "tags": [
+        "loc_playerApt",
+        "subloc_computer"
+      ]
+    },
+    {
+      "text": "&lt;h1 class=\"locationHeader\"&gt;Your Apartment&lt;/h1&gt;\n\nA digest of news around the E.S.C. Nothing notable.\n\n[[Go back. -&gt;playerApt-computer]]\n[[Log off. -&gt;playerApt]]",
+      "links": [
+        {
+          "name": "Go back. ",
+          "link": "playerApt-computer",
+          "pid": "19"
+        },
+        {
+          "name": "Log off. ",
+          "link": "playerApt",
+          "pid": "15"
+        }
+      ],
+      "name": "playerApt-computer-net",
+      "pid": "25",
+      "position": {
+        "x": "7100",
+        "y": "1300"
+      },
+      "tags": [
+        "loc_playerApt",
+        "subloc_computer"
+      ]
+    },
+    {
+      "text": "&lt;h1 class=\"locationHeader\"&gt;Your Apartment&lt;/h1&gt;\n\n&lt;div class=\"computer-text\"&gt;err: no item in employee.assignmenthistory has attribute \"commend\"&lt;/div&gt;\n\n[[They really need to fix that.-&gt;playerApt-computer-newAssign-02]]",
+      "links": [
+        {
+          "name": "They really need to fix that.",
+          "link": "playerApt-computer-newAssign-02",
+          "pid": "27"
+        }
+      ],
+      "name": "playerApt-computer-newAssign-01",
+      "pid": "26",
+      "position": {
+        "x": "7225",
+        "y": "1550"
+      },
+      "tags": [
+        "loc_playerApt",
+        "subloc_computer"
+      ]
+    },
+    {
+      "text": "&lt;h1 class=\"locationHeader\"&gt;Your Apartment&lt;/h1&gt;\n\n&lt;div class=\"computer-text\"&gt;Your assignment today is to \"clear out Apartment B82-77\". All items must be sorted for structure-wide recycling.\n\nThis job has been labelled as High Priority. It must be completed within 6 hours.\n\nMaterials for this job are: B82-77 Keycard. Printing now...&lt;/div&gt;\n\n[[Take keycard.-&gt;playerApt-computer-newAssign-03]]",
+      "links": [
+        {
+          "name": "Take keycard.",
+          "link": "playerApt-computer-newAssign-03",
+          "pid": "28"
+        }
+      ],
+      "name": "playerApt-computer-newAssign-02",
+      "pid": "27",
+      "position": {
+        "x": "7350",
+        "y": "1550"
+      },
+      "tags": [
+        "loc_playerApt",
+        "subloc_computer"
+      ]
+    },
+    {
+      "text": "&lt;h1 class=\"locationHeader\"&gt;Your Apartment&lt;/h1&gt;\n\nKeycard has been added to your inventory.\n\n&lt;div class=\"computer-text\"&gt;Additional Notes: \"Tenent requested manual relocation. Please complete ASAP and move all materials into a transportation unit.\" \n\nThank you for your commitment to your fellow residents. \n- E.S.C. Central Relocation and Recycling\n&lt;em&gt;Class Mobility and Human Sustainability&lt;/em&gt;\n&lt;/div&gt;\n\n[[Go back. -&gt;playerApt-computer]]\n[[Log off. -&gt;playerApt]]\n\n(set: $inv to it + (a: \"Keycard\")) &lt;!--add keycard to inventory--&gt;\n(set: $availLinks to it + (a: \"hub-intro\", \"mysteryAptExt-intro\")) &lt;!--add hub and mystery apartment to available rooms--&gt;",
+      "links": [
+        {
+          "name": "Go back. ",
+          "link": "playerApt-computer",
+          "pid": "19"
+        },
+        {
+          "name": "Log off. ",
+          "link": "playerApt",
+          "pid": "15"
+        }
+      ],
+      "name": "playerApt-computer-newAssign-03",
+      "pid": "28",
+      "position": {
+        "x": "7475",
+        "y": "1550"
+      },
+      "tags": [
+        "loc_playerApt",
+        "subloc_computer",
+        "code_array"
+      ]
+    },
+    {
+      "text": "&lt;h1 class=\"locationHeader\"&gt;Your Apartment&lt;/h1&gt;\n\n&lt;div class=\"computer-text\"&gt;\nYour assignment today is to \"clear out Apartment B82-77\". All items must be sorted for structure-wide recycling.\n\nThis job has been labelled as High Priority. It must be completed within 6 hours.\n\nAdditional Notes: \"Tenent requested manual relocation. Please complete ASAP and move all materials into a transportation unit.\" \n\nThank you for your commitment to your fellow residents. \n- E.S.C. Central Relocation and Recycling\n&lt;em&gt;Class Mobility and Human Sustainability&lt;/em&gt;\n&lt;/div&gt;\n\n[[Go back. -&gt;playerApt-computer]]\n[[Log off. -&gt;playerApt]]",
+      "links": [
+        {
+          "name": "Go back. ",
+          "link": "playerApt-computer",
+          "pid": "19"
+        },
+        {
+          "name": "Log off. ",
+          "link": "playerApt",
+          "pid": "15"
+        }
+      ],
+      "name": "playerApt-computer-reviewAssign",
+      "pid": "29",
+      "position": {
+        "x": "7100",
+        "y": "1675"
+      },
+      "tags": [
+        "loc_playerApt",
+        "subloc_computer"
+      ]
+    },
+    {
+      "text": "&lt;h1 class=\"locationHeader\"&gt;Central Hub&lt;/h1&gt;\n\nYour apartment door opens with a pressurized hiss. The hallway is mostly empty and blurs into the counless others you've walked through in the E.S.C. You turn towards the block's central hub to orient yourself.\n\n[[Go to hub.-&gt;hub]]\n\n(set: $availLinks to it - (a:\"hub-intro\"))\n(set: $availLinks to it + (a:\"hub\", \"playerApt\", \"bar\"))",
+      "links": [
+        {
+          "name": "Go to hub.",
+          "link": "hub",
+          "pid": "31"
+        }
+      ],
+      "name": "hub-intro",
+      "pid": "30",
+      "position": {
+        "x": "6000",
+        "y": "1375"
+      },
+      "tags": [
+        "loc_hub"
+      ]
+    },
+    {
+      "text": "&lt;h1 class=\"locationHeader\"&gt;Central Hub&lt;/h1&gt;\n\nThe central hub. Connecting residents, ESC-SEC and whatever small attractions this particular floor has.\n\n(if: $availLinks contains \"playerApt\")[ [[playerApt]] ]\n(if: $availLinks contains \"mysteryApt\")[ [[mysteryApt]] ]\n(else-if: $availLinks contains \"mysteryAptExt\")[ [[mysteryAptExt]] ]\n(else-if: $availLinks contains \"mysteryAptExt-intro\")[ [[mysteryAptExt-intro]] ]\n(if: $availLinks contains \"bar-intro\")[ [[bar-intro]] ]\n(else-if: $availLinks contains \"bar\")[ [[bar]] ]\n(if: $availLinks contains \"security\")[ [[security]] ]\n(else-if: $availLinks contains \"security-intro\")[ [[security-intro]] ]\n(if: $availLinks contains \"friendApt\")[ [[friendApt]] ]\n(else-if: $availLinks contains \"friendAptExt\")[ [[friendAptExt]] ]",
+      "links": [
+        {
+          "name": "playerApt",
+          "link": "playerApt",
+          "pid": "15"
+        },
+        {
+          "name": "mysteryApt",
+          "link": "mysteryApt",
+          "pid": "12"
+        },
+        {
+          "name": "mysteryAptExt",
+          "link": "mysteryAptExt",
+          "pid": "6"
+        },
+        {
+          "name": "mysteryAptExt-intro",
+          "link": "mysteryAptExt-intro",
+          "pid": "32"
+        },
+        {
+          "name": "bar-intro",
+          "link": "bar-intro",
+          "pid": "4"
+        },
+        {
+          "name": "bar",
+          "link": "bar",
+          "pid": "63"
+        },
+        {
+          "name": "security",
+          "link": "security",
+          "pid": "45"
+        },
+        {
+          "name": "security-intro",
+          "link": "security-intro",
+          "pid": "5"
+        },
+        {
+          "name": "friendApt",
+          "link": "friendApt",
+          "pid": "13"
+        },
+        {
+          "name": "friendAptExt",
+          "link": "friendAptExt",
+          "pid": "3"
+        }
+      ],
+      "name": "hub",
+      "pid": "31",
+      "position": {
+        "x": "6000",
+        "y": "1500"
+      },
+      "tags": [
+        "loc_hub",
+        "code_gate"
+      ]
+    },
+    {
+      "text": "&lt;h1 class=\"locationHeader\"&gt;Outside of Apartment B82-77&lt;/h1&gt;\n\nYou walk down a spoke and arrive at Apartment B82-77.\n\n[[There's someone by the door.-&gt;mysteryAptExt-talkNicola-00]]\n\n(set: $availLinks to it - (a:\"mysteryAptExt-intro\"))\n(set: $availLinks to it + (a:\"mysteryAptExt\"))",
+      "links": [
+        {
+          "name": "There's someone by the door.",
+          "link": "mysteryAptExt-talkNicola-00",
+          "pid": "33"
+        }
+      ],
+      "name": "mysteryAptExt-intro",
+      "pid": "32",
+      "position": {
+        "x": "6500",
+        "y": "2000"
+      },
+      "tags": [
+        "loc_mysteryAptExt",
+        "code_array"
+      ]
+    },
+    {
+      "text": "A younger resident leans by the door, trying to make herself not too noticeable despite looking aorund anxiously.\n\nIt seems like she's waiting on [[you. -&gt;mysteryAptExt-talkNicola-01]]",
+      "links": [
+        {
+          "name": "you. ",
+          "link": "mysteryAptExt-talkNicola-01",
+          "pid": "34"
+        }
+      ],
+      "name": "mysteryAptExt-talkNicola-00",
+      "pid": "33",
+      "position": {
+        "x": "6800",
+        "y": "2000"
+      },
+      "tags": [
+        "loc_mysteryAptExt"
+      ]
+    },
+    {
+      "text": "She slowly approaches.\n\"Hey are you...?\"\n\n[[Huh? -&gt;mysteryAptExt-talkNicola-02]]",
+      "links": [
+        {
+          "name": "Huh? ",
+          "link": "mysteryAptExt-talkNicola-02",
+          "pid": "35"
+        }
+      ],
+      "name": "mysteryAptExt-talkNicola-01",
+      "pid": "34",
+      "position": {
+        "x": "6925",
+        "y": "2000"
+      },
+      "tags": [
+        "loc_mysteryAptExt"
+      ]
+    },
+    {
+      "text": "She quickly inspects you looking at your uniform. do you know her?\n\"Oh, um, nevermind.\"\n\n[[Okay...-&gt;mysteryAptExt-talkNicola-03]]",
+      "links": [
+        {
+          "name": "Okay...",
+          "link": "mysteryAptExt-talkNicola-03",
+          "pid": "36"
+        }
+      ],
+      "name": "mysteryAptExt-talkNicola-02",
+      "pid": "35",
+      "position": {
+        "x": "7050",
+        "y": "2000"
+      },
+      "tags": [
+        "loc_mysteryAptExt"
+      ]
+    },
+    {
+      "text": "She walks back, slightly further away and pretends to look at something down the hall.\n\n[[Use keycard on apartment door.-&gt;mysteryAptExt-talkNicola-04]]",
+      "links": [
+        {
+          "name": "Use keycard on apartment door.",
+          "link": "mysteryAptExt-talkNicola-04",
+          "pid": "37"
+        }
+      ],
+      "name": "mysteryAptExt-talkNicola-03",
+      "pid": "36",
+      "position": {
+        "x": "7175",
+        "y": "2000"
+      },
+      "tags": [
+        "loc_mysteryAptExt"
+      ]
+    },
+    {
+      "text": "You bring your keycard to the door but it doesn't open.\n\n[[Typical.-&gt;mysteryAptExt-talkNicola-05]]\n\n(set: $availLinks to it + (a:\"security-intro\"))\n(set: $inv to it - (a:\"Keycard\"))\n(set: $inv to it + (a:\"Broken Keycard\"))\n",
+      "links": [
+        {
+          "name": "Typical.",
+          "link": "mysteryAptExt-talkNicola-05",
+          "pid": "38"
+        }
+      ],
+      "name": "mysteryAptExt-talkNicola-04",
+      "pid": "37",
+      "position": {
+        "x": "7300",
+        "y": "2000"
+      },
+      "tags": [
+        "loc_mysteryAptExt",
+        "code_array"
+      ]
+    },
+    {
+      "text": "The person by the door walks up to you.\n\"You're from R&amp;R right? Not ESC-SEC?\"\n\n[[Yeah?-&gt;mysteryAptExt-talkNicola-06]]",
+      "links": [
+        {
+          "name": "Yeah?",
+          "link": "mysteryAptExt-talkNicola-06",
+          "pid": "39"
+        }
+      ],
+      "name": "mysteryAptExt-talkNicola-05",
+      "pid": "38",
+      "position": {
+        "x": "7425",
+        "y": "2000"
+      },
+      "tags": [
+        "loc_mysteryAptExt"
+      ]
+    },
+    {
+      "text": "She hesistates before quickly speaking.\n\n\"I know you probably can't but... if you find anything in there, would you let me have a look?\"\n\n[[This stuff is going to a tenent.-&gt;mysteryAptExt-talkNicola-07]]",
+      "links": [
+        {
+          "name": "This stuff is going to a tenent.",
+          "link": "mysteryAptExt-talkNicola-07",
+          "pid": "40"
+        }
+      ],
+      "name": "mysteryAptExt-talkNicola-06",
+      "pid": "39",
+      "position": {
+        "x": "7550",
+        "y": "2000"
+      },
+      "tags": [
+        "loc_mysteryAptExt"
+      ]
+    },
+    {
+      "text": "She looks visibly confused.\n\n\"What? No that's... Lee didn't move, he's just gone.\"\n\n[[He died?-&gt;mysteryAptExt-talkNicola-08]]",
+      "links": [
+        {
+          "name": "He died?",
+          "link": "mysteryAptExt-talkNicola-08",
+          "pid": "41"
+        }
+      ],
+      "name": "mysteryAptExt-talkNicola-07",
+      "pid": "40",
+      "position": {
+        "x": "7675",
+        "y": "2000"
+      },
+      "tags": [
+        "loc_mysteryAptExt"
+      ]
+    },
+    {
+      "text": "It's unusual that they would get the job type wrong but, then again, this wouldn't be the first time they dropped a corpse on you without notice.\n\n\"He's not dead. At least...if he is then they're hiding something.\"\n\n[[Who is?-&gt;mysteryAptExt-talkNicola-09]]",
+      "links": [
+        {
+          "name": "Who is?",
+          "link": "mysteryAptExt-talkNicola-09",
+          "pid": "42"
+        }
+      ],
+      "name": "mysteryAptExt-talkNicola-08",
+      "pid": "41",
+      "position": {
+        "x": "7800",
+        "y": "2000"
+      },
+      "tags": [
+        "loc_mysteryAptExt"
+      ]
+    },
+    {
+      "text": "She looks towards the ESC-SEC desk.\n\n\"Look, why don't we talk in my apartment? It's B82-73. I'm Nicola.\"\n\nBefore you can probe further, she leaves.\n\n[[Try keycard again.-&gt;mysteryAptExt-lockedDoor]]\n\n(set: $availLinks to it + (a:\"friendAptExt\"))\n(set: $availLinks to it + (a:\"friendApt-meetNicola-00\"))",
+      "links": [
+        {
+          "name": "Try keycard again.",
+          "link": "mysteryAptExt-lockedDoor",
+          "pid": "43"
+        }
+      ],
+      "name": "mysteryAptExt-talkNicola-09",
+      "pid": "42",
+      "position": {
+        "x": "7925",
+        "y": "2000"
+      },
+      "tags": [
+        "loc_mysteryAptExt",
+        "code_array"
+      ]
+    },
+    {
+      "text": "Still nothing. You'll have to go to the ESC-SEC desk to get the keycard fixed.\n\n[[Go to hub.-&gt;hub]]",
+      "links": [
+        {
+          "name": "Go to hub.",
+          "link": "hub",
+          "pid": "31"
+        }
+      ],
+      "name": "mysteryAptExt-lockedDoor",
+      "pid": "43",
+      "position": {
+        "x": "8100",
+        "y": "2200"
+      },
+      "tags": [
+        "loc_mysteryAptExt"
+      ]
+    },
+    {
+      "text": "The door lock chimes.\n\n[[Enter Apt B82-77-&gt;mysteryApt-intro]]",
+      "links": [
+        {
+          "name": "Enter Apt B82-77",
+          "link": "mysteryApt-intro",
+          "pid": "70"
+        }
+      ],
+      "name": "mysteryAptExt-unlocked",
+      "pid": "44",
+      "position": {
+        "x": "6800",
+        "y": "2300"
+      },
+      "tags": [
+        "loc_mysteryAptExt"
+      ]
+    },
+    {
+      "text": "&lt;h1 class=\"locationHeader\"&gt;E.S.C. Security Desk&lt;/h1&gt;\n\n&lt;div class:\"forDevsOnly\"&gt;\n#For Devs:\n  *Location: Kind of like a bank teller counter, no interior needs to be modelled.\n  *Assets: Computer, Security Guard Model\n&lt;/div&gt;\n\nA standard issue ESC-SEC desk. You can barely make out the silhoutte of a Peacekeeper behind the frosted glass.\n\n[[Talk to peacekeeper.-&gt;security-talk]]\n[[Go to Hub. -&gt;hub]]",
+      "links": [
+        {
+          "name": "Talk to peacekeeper.",
+          "link": "security-talk",
+          "pid": "46"
+        },
+        {
+          "name": "Go to Hub. ",
+          "link": "hub",
+          "pid": "31"
+        }
+      ],
+      "name": "security",
+      "pid": "45",
+      "position": {
+        "x": "5500",
+        "y": "1025"
+      },
+      "tags": [
+        "loc_security"
+      ]
+    },
+    {
+      "text": "&lt;h1 class=\"locationHeader\"&gt;E.S.C. Security Desk&lt;/h1&gt;\n\nYou approach the peacekeeper. He seems preoccupied with something on his screen.\n\n(if: $inv contains \"Broken Keycard\")[ [[Fix Keycard-&gt;security-fixKeycard-00]] ]",
+      "links": [
+        {
+          "name": "Fix Keycard",
+          "link": "security-fixKeycard-00",
+          "pid": "47"
+        }
+      ],
+      "name": "security-talk",
+      "pid": "46",
+      "position": {
+        "x": "5300",
+        "y": "1100"
+      },
+      "tags": [
+        "loc_security",
+        "code_gate"
+      ]
+    },
+    {
+      "text": "&lt;h1 class=\"locationHeader\"&gt;E.S.C. Security Desk&lt;/h1&gt;\n\nYou explain that you need your keycard fixed for your job.\n\nThe peacekeeper takes your keycard, barely registering you as a human in front of him. He does his magic.\n\n[[Wait.-&gt;security-fixKeycard-01]]",
+      "links": [
+        {
+          "name": "Wait.",
+          "link": "security-fixKeycard-01",
+          "pid": "48"
+        }
+      ],
+      "name": "security-fixKeycard-00",
+      "pid": "47",
+      "position": {
+        "x": "5150",
+        "y": "1100"
+      },
+      "tags": [
+        "loc_security"
+      ]
+    },
+    {
+      "text": "&lt;h1 class=\"locationHeader\"&gt;E.S.C. Security Desk&lt;/h1&gt;\n\nError chimes and frustrated noises come from the shadow behind the glass. It gives an exaggerated sigh.\n\n[[...-&gt;security-fixKeycard-02]]",
+      "links": [
+        {
+          "name": "...",
+          "link": "security-fixKeycard-02",
+          "pid": "49"
+        }
+      ],
+      "name": "security-fixKeycard-01",
+      "pid": "48",
+      "position": {
+        "x": "5000",
+        "y": "1100"
+      },
+      "tags": [
+        "loc_security"
+      ]
+    },
+    {
+      "text": "&lt;h1 class=\"locationHeader\"&gt;E.S.C. Security Desk&lt;/h1&gt;\n\nAnother silhouette joins the first. They stand by the computer muttering about security clearances and administrator overrides.\n\n[[Listen in.-&gt;security-fixKeycard-03]]\n[[Wait.-&gt;security-fixKeycard-04]]\n",
+      "links": [
+        {
+          "name": "Listen in.",
+          "link": "security-fixKeycard-03",
+          "pid": "50"
+        },
+        {
+          "name": "Wait.",
+          "link": "security-fixKeycard-04",
+          "pid": "51"
+        }
+      ],
+      "name": "security-fixKeycard-02",
+      "pid": "49",
+      "position": {
+        "x": "4825",
+        "y": "1100"
+      },
+      "tags": [
+        "loc_security"
+      ]
+    },
+    {
+      "text": "&lt;h1 class=\"locationHeader\"&gt;E.S.C. Security Desk&lt;/h1&gt;\n\nYou pretend to look down the hall but focus in on what they're saying.\n\n\"How the hell does an R&amp;R guy get clearance but not us?\"....\"It doesn't matter it checks out.\"\n\n[[...-&gt;security-fixKeycard-04]]",
+      "links": [
+        {
+          "name": "...",
+          "link": "security-fixKeycard-04",
+          "pid": "51"
+        }
+      ],
+      "name": "security-fixKeycard-03",
+      "pid": "50",
+      "position": {
+        "x": "4750",
+        "y": "1250"
+      },
+      "tags": [
+        "loc_security"
+      ]
+    },
+    {
+      "text": "&lt;h1 class=\"locationHeader\"&gt;E.S.C. Security Desk&lt;/h1&gt;\n\nFinally, a reassuring beep.\n\n\"You're all set.\"\n\n[[Thanks.-&gt;security-fixKeycard-05]]\n\n(set: $inv to it - (a:\"Broken Keycard\"))\n(set: $inv to it + (a:\"Fixed Keycard\"))",
+      "links": [
+        {
+          "name": "Thanks.",
+          "link": "security-fixKeycard-05",
+          "pid": "52"
+        }
+      ],
+      "name": "security-fixKeycard-04",
+      "pid": "51",
+      "position": {
+        "x": "4675",
+        "y": "1100"
+      },
+      "tags": [
+        "loc_security",
+        "code_array"
+      ]
+    },
+    {
+      "text": "&lt;h1 class=\"locationHeader\"&gt;E.S.C. Security Desk&lt;/h1&gt;\n\nThe shadow grunts.\n\n[[Return to Hub.-&gt;hub]]",
+      "links": [
+        {
+          "name": "Return to Hub.",
+          "link": "hub",
+          "pid": "31"
+        }
+      ],
+      "name": "security-fixKeycard-05",
+      "pid": "52",
+      "position": {
+        "x": "4525",
+        "y": "1100"
+      },
+      "tags": [
+        "loc_security"
+      ]
+    },
+    {
+      "text": "\"Thanks for coming\".\n\n[[\"It's no problem\"-&gt;friendApt-meetNicola-01a]]\n[[\"I can't give you any of this stuff.\"-&gt;friendApt-meetNicola-01b]]\n\n&lt;!--CODE--&gt;\n(set: $availLinks to it - (a:\"friendApt-meetNicola-00\"))",
+      "links": [
+        {
+          "name": "\"It's no problem\"",
+          "link": "friendApt-meetNicola-01a",
+          "pid": "54"
+        },
+        {
+          "name": "\"I can't give you any of this stuff.\"",
+          "link": "friendApt-meetNicola-01b",
+          "pid": "55"
+        }
+      ],
+      "name": "friendApt-meetNicola-00",
+      "pid": "53",
+      "position": {
+        "x": "5300",
+        "y": "2675"
+      },
+      "tags": [
+        "loc_friendApt",
+        "code_array"
+      ]
+    },
+    {
+      "text": "\"So, what did they say you were doing?\"\n\n[[\"They said I'm just moving the tenent's items.\"-&gt;friendApt-meetNicola-02]]",
+      "links": [
+        {
+          "name": "\"They said I'm just moving the tenent's items.\"",
+          "link": "friendApt-meetNicola-02",
+          "pid": "56"
+        }
+      ],
+      "name": "friendApt-meetNicola-01a",
+      "pid": "54",
+      "position": {
+        "x": "5175",
+        "y": "2625"
+      },
+      "tags": [
+        "loc_friendApt"
+      ]
+    },
+    {
+      "text": "\"I understand... but what you need to understand is this job isn't what you think.\"\n\n[[\"They said I'm just moving the tenent's items.\"-&gt;friendApt-meetNicola-02]]",
+      "links": [
+        {
+          "name": "\"They said I'm just moving the tenent's items.\"",
+          "link": "friendApt-meetNicola-02",
+          "pid": "56"
+        }
+      ],
+      "name": "friendApt-meetNicola-01b",
+      "pid": "55",
+      "position": {
+        "x": "5175",
+        "y": "2725"
+      },
+      "tags": [
+        "loc_friendApt"
+      ]
+    },
+    {
+      "text": "\"Well... you're not moving them for Lee. He's been gone for over a week now.\"\n\n[[\"So? People move all the time\"-&gt;friendApt-meetNicola-03a]]\n[[\"How do you know this?\"-&gt;friendApt-meetNicola-03b]]",
+      "links": [
+        {
+          "name": "\"So? People move all the time\"",
+          "link": "friendApt-meetNicola-03a",
+          "pid": "57"
+        },
+        {
+          "name": "\"How do you know this?\"",
+          "link": "friendApt-meetNicola-03b",
+          "pid": "58"
+        }
+      ],
+      "name": "friendApt-meetNicola-02",
+      "pid": "56",
+      "position": {
+        "x": "5050",
+        "y": "2675"
+      },
+      "tags": [
+        "loc_friendApt"
+      ]
+    },
+    {
+      "text": "\"But they usually take their apartment with them. Besides, unlike most of us, Lee wasn't the type to be mobile.\"\n\n[[\"Mobility isn't a choice. We all move around the ESC.\"-&gt;friendApt-meetNicola-04]]",
+      "links": [
+        {
+          "name": "\"Mobility isn't a choice. We all move around the ESC.\"",
+          "link": "friendApt-meetNicola-04",
+          "pid": "59"
+        }
+      ],
+      "name": "friendApt-meetNicola-03a",
+      "pid": "57",
+      "position": {
+        "x": "4925",
+        "y": "2625"
+      },
+      "tags": [
+        "loc_friendApt"
+      ]
+    },
+    {
+      "text": "\"Lee wasn't the type to be mobile. Unlike most of us.\"\n\n[[\"Mobility isn't a choice. We all move around the ESC.\"-&gt;friendApt-meetNicola-04]]",
+      "links": [
+        {
+          "name": "\"Mobility isn't a choice. We all move around the ESC.\"",
+          "link": "friendApt-meetNicola-04",
+          "pid": "59"
+        }
+      ],
+      "name": "friendApt-meetNicola-03b",
+      "pid": "58",
+      "position": {
+        "x": "4925",
+        "y": "2725"
+      },
+      "tags": [
+        "loc_friendApt"
+      ]
+    },
+    {
+      "text": "\"You're right. But there are loopholes.\"\n\nNicola looks down.\n\n\"Lee was part of the software division, helped program a lot of the algorithms for individual mobility among the complexes. If you perform the right way, collect enough merits but also accrue debts or demerits. You can stay in the same place\"\n\n[[\"Is that legal?\"-&gt;friendApt-meetNicola-05a]]\n[[\"Is this what you do?\"-&gt;friendApt-meetNicola-05b]]",
+      "links": [
+        {
+          "name": "\"Is that legal?\"",
+          "link": "friendApt-meetNicola-05a",
+          "pid": "60"
+        },
+        {
+          "name": "\"Is this what you do?\"",
+          "link": "friendApt-meetNicola-05b",
+          "pid": "89"
+        }
+      ],
+      "name": "friendApt-meetNicola-04",
+      "pid": "59",
+      "position": {
+        "x": "4800",
+        "y": "2675"
+      },
+      "tags": [
+        "loc_friendApt"
+      ]
+    },
+    {
+      "text": "Nicola shrugs.\n\n\"The software allows it so it might as well be.\"\n\n[[And you do it anyway?-&gt;friendApt-meetNicola-05b]]\n[[\"What do you think happened to him?\"-&gt;friendApt-meetNicola-06]]",
+      "links": [
+        {
+          "name": "And you do it anyway?",
+          "link": "friendApt-meetNicola-05b",
+          "pid": "89"
+        },
+        {
+          "name": "\"What do you think happened to him?\"",
+          "link": "friendApt-meetNicola-06",
+          "pid": "61"
+        }
+      ],
+      "name": "friendApt-meetNicola-05a",
+      "pid": "60",
+      "position": {
+        "x": "4675",
+        "y": "2600"
+      },
+      "tags": [
+        "loc_friendApt"
+      ]
+    },
+    {
+      "text": "\"Maybe ESC-SEC caught on. Lee also could get really impassioned about it, said that constantly moving was by design to prevent people from coming together. I believed him, but he really liked bringing it up every time he could.\"\n\t\nYou get the impressions that Nicola knew Lee for longer than most people get to know each other in this place.\n\n[[\"Can I help?\"-&gt;friendApt-meetNicola-07b]]\n[[\"So what do you want from me?\"-&gt;friendApt-meetNicola-07a]]",
+      "links": [
+        {
+          "name": "\"Can I help?\"",
+          "link": "friendApt-meetNicola-07b",
+          "pid": "91"
+        },
+        {
+          "name": "\"So what do you want from me?\"",
+          "link": "friendApt-meetNicola-07a",
+          "pid": "90"
+        }
+      ],
+      "name": "friendApt-meetNicola-06",
+      "pid": "61",
+      "position": {
+        "x": "4525",
+        "y": "2675"
+      },
+      "tags": [
+        "loc_friendApt"
+      ]
+    },
+    {
+      "text": "Nicola considers for a moment.\n\n\"I know it's a lot but... Lee really got obsessed with a before-era game. Some crappy old fantasy thing incompatible with ESC-NET. I think it was meant to be full of people but he played it alone. It might still be on his computer. If you find it, I'd appreciate if you could give me his copy.\"\n\n[[\"Okay\"-&gt;friendApt]]",
+      "links": [
+        {
+          "name": "\"Okay\"",
+          "link": "friendApt",
+          "pid": "13"
+        }
+      ],
+      "name": "friendApt-meetNicola-08",
+      "pid": "62",
+      "position": {
+        "x": "4200",
+        "y": "2700"
+      },
+      "tags": [
+        "loc_friendApt"
+      ]
+    },
+    {
+      "text": "The space is tiny, holding only about 3 people at the bar itself. Just some ads for upper level crap on the archaic TV. Leonards stands, inspecting the damage of the broken auto-bartender.\n\n[[Talk to Leonard-&gt;bar-talkLeonard]]\n[[Go back to Hub. -&gt;hub]]",
+      "links": [
+        {
+          "name": "Talk to Leonard",
+          "link": "bar-talkLeonard",
+          "pid": "101"
+        },
+        {
+          "name": "Go back to Hub. ",
+          "link": "hub",
+          "pid": "31"
+        }
+      ],
+      "name": "bar",
+      "pid": "63",
+      "position": {
+        "x": "5500",
+        "y": "1675"
+      },
+      "tags": [
+        "loc_bar"
+      ]
+    },
+    {
+      "text": "As you take a seat the machine whirs to life.\n\"Welcome, what can I get you today?\"\n\nYou take a look at the familar offerings.\n\n[[CarboFill (.005 eC)-&gt;bar-autoBartender-01]]\n[[Joyful Green (.010 eC)-&gt;bar-autoBartender-01]]\n[[KaleAle (0.20 eC)-&gt;bar-autoBartender-01]]",
+      "links": [
+        {
+          "name": "CarboFill (.005 eC)",
+          "link": "bar-autoBartender-01",
+          "pid": "65"
+        },
+        {
+          "name": "Joyful Green (.010 eC)",
+          "link": "bar-autoBartender-01",
+          "pid": "65"
+        },
+        {
+          "name": "KaleAle (0.20 eC)",
+          "link": "bar-autoBartender-01",
+          "pid": "65"
+        }
+      ],
+      "name": "bar-autoBartender-00",
+      "pid": "64",
+      "position": {
+        "x": "5300",
+        "y": "1650"
+      },
+      "tags": [
+        "loc_bar",
+        "subloc_seat"
+      ]
+    },
+    {
+      "text": "\"Coming right up.\"\n\nThe machine places a glass in front of you and lowers in a nozzle.\n\nYou here a repetitive clicking noise but no drink comes out.\n\n[[Um-&gt;bar-autoBartender-02]]",
+      "links": [
+        {
+          "name": "Um",
+          "link": "bar-autoBartender-02",
+          "pid": "66"
+        }
+      ],
+      "name": "bar-autoBartender-01",
+      "pid": "65",
+      "position": {
+        "x": "5175",
+        "y": "1650"
+      },
+      "tags": [
+        "loc_bar",
+        "subloc_seat"
+      ]
+    },
+    {
+      "text": "A loud pop shakes the counter and all sorts of liquid start spewing out the back of the machine. Despite the chaos, the machine keeps a cordial attitude.\n\n\"We're sorry, our bartender is currently out of order. A technician will c o m e  t o  r e  p   a   i   r...\"\n\nThe automatic voice trails off.\n\nAnother, more human voice sounds off from [[behind the counter.-&gt;bar-autoBartender-03]]",
+      "links": [
+        {
+          "name": "behind the counter.",
+          "link": "bar-autoBartender-03",
+          "pid": "67"
+        }
+      ],
+      "name": "bar-autoBartender-02",
+      "pid": "66",
+      "position": {
+        "x": "5050",
+        "y": "1650"
+      },
+      "tags": [
+        "loc_bar",
+        "subloc_seat"
+      ]
+    },
+    {
+      "text": "\"Goddamnit!\"\n\nA stout older man heaves himself up into view.\n\n\"I really thought this one would've been it. Alright we'll go old fashioned I guess, better that way, what can I get you?\"\n\n[[CarboFill (.005 eC)-&gt;bar-autoBartender-04a]]\n[[Joyful Green (.010 eC)-&gt;bar-autoBartender-04a]]\n[[KaleAle (0.20 eC)-&gt;bar-autoBartender-04a]]\n[[I'm not thirsty, really.-&gt;bar-autoBartender-04b]]",
+      "links": [
+        {
+          "name": "CarboFill (.005 eC)",
+          "link": "bar-autoBartender-04a",
+          "pid": "68"
+        },
+        {
+          "name": "Joyful Green (.010 eC)",
+          "link": "bar-autoBartender-04a",
+          "pid": "68"
+        },
+        {
+          "name": "KaleAle (0.20 eC)",
+          "link": "bar-autoBartender-04a",
+          "pid": "68"
+        },
+        {
+          "name": "I'm not thirsty, really.",
+          "link": "bar-autoBartender-04b",
+          "pid": "69"
+        }
+      ],
+      "name": "bar-autoBartender-03",
+      "pid": "67",
+      "position": {
+        "x": "4925",
+        "y": "1650"
+      },
+      "tags": [
+        "loc_bar",
+        "subloc_seat"
+      ]
+    },
+    {
+      "text": "\"Coming right up.\"\n\nHe punctures a hole directly into a dispensing pouch and squeezes it into your glass. The drink is flat and unnappealing and something definitely mixed in there in a way it shouldn't have.\n\n[[Attempt to drink it.-&gt;bar-autoBartender-05]]\n[[Actually, nevermind.-&gt;bar-autoBartender-06]]",
+      "links": [
+        {
+          "name": "Attempt to drink it.",
+          "link": "bar-autoBartender-05",
+          "pid": "85"
+        },
+        {
+          "name": "Actually, nevermind.",
+          "link": "bar-autoBartender-06",
+          "pid": "86"
+        }
+      ],
+      "name": "bar-autoBartender-04a",
+      "pid": "68",
+      "position": {
+        "x": "4800",
+        "y": "1575"
+      },
+      "tags": [
+        "loc_bar",
+        "subloc_seat"
+      ]
+    },
+    {
+      "text": "\"Aw, don't let this piece of junk steal your appetite. I'd be starving if I did!\"\n\nHis huge laugh fills the cramped space.\n\n[[Try to down the drink.-&gt;bar-autoBartender-05]]\n[[Just... stare at the drink.-&gt;bar-autoBartender-06]]",
+      "links": [
+        {
+          "name": "Try to down the drink.",
+          "link": "bar-autoBartender-05",
+          "pid": "85"
+        },
+        {
+          "name": "Just... stare at the drink.",
+          "link": "bar-autoBartender-06",
+          "pid": "86"
+        }
+      ],
+      "name": "bar-autoBartender-04b",
+      "pid": "69",
+      "position": {
+        "x": "4800",
+        "y": "1725"
+      },
+      "tags": [
+        "loc_bar",
+        "subloc_seat"
+      ]
+    },
+    {
+      "text": "You enter the apartment. You don't know what you expected, but it's much cleaner than you anticipated. It wouldn't take you more than an hour to pack everything up in here.\n\nThere might be enough time to stay and [[look around. -&gt;mysteryApt]]",
+      "links": [
+        {
+          "name": "look around. ",
+          "link": "mysteryApt",
+          "pid": "12"
+        }
+      ],
+      "name": "mysteryApt-intro",
+      "pid": "70",
+      "position": {
+        "x": "6500",
+        "y": "2500"
+      },
+      "tags": [
+        "loc_mysteryApt"
+      ]
+    },
+    {
+      "text": "You look into the drawers. They are completely empty.\n\n[[Go back.-&gt;mysteryApt]]\n(if: not ($inv contains \"Note from Lee\"))[ [[Check again-&gt;mysteryApt-drawers-note-00]] ]",
+      "links": [
+        {
+          "name": "Go back.",
+          "link": "mysteryApt",
+          "pid": "12"
+        },
+        {
+          "name": "Check again",
+          "link": "mysteryApt-drawers-note-00",
+          "pid": "74"
+        }
+      ],
+      "name": "mysteryApt-drawers",
+      "pid": "71",
+      "position": {
+        "x": "6900",
+        "y": "2550"
+      },
+      "tags": [
+        "loc_mysteryApt",
+        "subloc_drawers",
+        "code_gate"
+      ]
+    },
+    {
+      "text": "Through the murky depths you see the vast city spreading out. Underneath, miraculously and despite the lack of light, there's a living, thriving plant.\n\n[[Go back.-&gt;mysteryApt]]\n(if: $inv contains \"Water Bottle\")[ [[Water the plant with Water Bottle.-&gt;mysteryApt-window-waterPlant]] ]",
+      "links": [
+        {
+          "name": "Go back.",
+          "link": "mysteryApt",
+          "pid": "12"
+        },
+        {
+          "name": "Water the plant with Water Bottle.",
+          "link": "mysteryApt-window-waterPlant",
+          "pid": "93"
+        }
+      ],
+      "name": "mysteryApt-window",
+      "pid": "72",
+      "position": {
+        "x": "6900",
+        "y": "2675"
+      },
+      "tags": [
+        "loc_mysteryApt",
+        "subloc_window",
+        "code_gate"
+      ]
+    },
+    {
+      "text": "There's a faint burnt smell as you approach the computer. Maybe something fried? It's much fancier than the computer you have, looks like it was taken straight from an I.T. storeroom.\n\n(if: $availLinks contains \"mysteryApt-computer-home\")[ [[Log in.-&gt;mysteryApt-computer-home]] ]\n(else:)[ [[Log in.-&gt;mysteryApt-computer-boot]] ]\n[[Go back.-&gt;mysteryApt]]",
+      "links": [
+        {
+          "name": "Log in.",
+          "link": "mysteryApt-computer-home",
+          "pid": "111"
+        },
+        {
+          "name": "Log in.",
+          "link": "mysteryApt-computer-boot",
+          "pid": "82"
+        },
+        {
+          "name": "Go back.",
+          "link": "mysteryApt",
+          "pid": "12"
+        }
+      ],
+      "name": "mysteryApt-computer",
+      "pid": "73",
+      "position": {
+        "x": "6900",
+        "y": "2975"
+      },
+      "tags": [
+        "loc_mysteryApt",
+        "subloc_screen",
+        "code_gate"
+      ]
+    },
+    {
+      "text": "You reach in further, feeling around for anything that may have been left behind.\n\nYou touch something rough and stuck to the underside of the drawers. It's dangerously thin yet light, you nearly cut yourself pulling it out.\n\n[[Inspect the item.-&gt;mysteryApt-drawers-note-01]]",
+      "links": [
+        {
+          "name": "Inspect the item.",
+          "link": "mysteryApt-drawers-note-01",
+          "pid": "75"
+        }
+      ],
+      "name": "mysteryApt-drawers-note-00",
+      "pid": "74",
+      "position": {
+        "x": "7050",
+        "y": "2550"
+      },
+      "tags": [
+        "loc_mysteryApt",
+        "subloc_drawers"
+      ]
+    },
+    {
+      "text": "You hold a small, off white square in your hand. You have no idea what this thing is. There's some text displayed on it.\n\nNote added to items.\n\n[[Read it.-&gt;inventory-note]]\n\n(set: $inv to it + (a:\"Note from Lee\"))",
+      "links": [
+        {
+          "name": "Read it.",
+          "link": "inventory-note",
+          "pid": "76"
+        }
+      ],
+      "name": "mysteryApt-drawers-note-01",
+      "pid": "75",
+      "position": {
+        "x": "7200",
+        "y": "2550"
+      },
+      "tags": [
+        "loc_mysteryApt",
+        "subloc_drawers",
+        "code_array"
+      ]
+    },
+    {
+      "text": "It reads like a memo, but the font is a bit hard to make out:\n\n&lt;div class=\"LeeLetter\"&gt;\nTo C, (or whomever nosey enough)\n\nI may be gone, for one reason or another. But there's no point in worrying about me– only worry about yourself. Some may be fine with our day to day here. If you know me, you know how I felt about it. I tried my best to do something about it, whether or not I failed or succeeded is outside the bounds of this note.\n\nIf you want to follow me, all you need to do is allow yourself to grow.\n\n- (formerly) Lee\n&lt;/div&gt;",
+      "name": "inventory-note",
+      "pid": "76",
+      "position": {
+        "x": "5600",
+        "y": "100"
+      },
+      "tags": [
+        "item"
+      ]
+    },
+    {
+      "text": "Dialogue WIP. Says she knows about this, m.p. had gotten really addicted to it recently. Kept saying there was more to it than just a crude empty world ful of ghosts.\n\nHint: try running the game in Apt 77.",
+      "name": "friendApt-showGame",
+      "pid": "77",
+      "position": {
+        "x": "5300",
+        "y": "2975"
+      },
+      "tags": [
+        "loc_friendApt"
+      ]
+    },
+    {
+      "text": "You pull out the note from Lee and show it to Nicola.\n\nShe reads it silently.\n\nAfter a moment, she takes a deep breath. \n\n\"Thank you for showing this to me. I know you didn't have to.\"\n\n[[What is this thing?-&gt;friendApt-showNote-paper]]\n[[Do you know what he's talking about at the end? -&gt;friendApt-showNote-grow]]\n[[What did he succeed or fail at?-&gt;friendApt-showNote-failed]]",
+      "links": [
+        {
+          "name": "What is this thing?",
+          "link": "friendApt-showNote-paper",
+          "pid": "79"
+        },
+        {
+          "name": "Do you know what he's talking about at the end? ",
+          "link": "friendApt-showNote-grow",
+          "pid": "80"
+        },
+        {
+          "name": "What did he succeed or fail at?",
+          "link": "friendApt-showNote-failed",
+          "pid": "81"
+        }
+      ],
+      "name": "friendApt-showNote",
+      "pid": "78",
+      "position": {
+        "x": "5300",
+        "y": "3125"
+      },
+      "tags": [
+        "loc_friendApt"
+      ]
+    },
+    {
+      "text": "Nicola laughs. \n\n\"Lee really was an old soul. He went out of his way to find silly before-era things like sticky notes.\"\n\nHer face stiffens a bit.\n\n\"But... I think he used this specifically because it was the only way to send me a message outside of ESC-NET. I always thought he was a bit too paranoid when he said 'paper is private'. I guess this time it makes sense.\"\n\n[[Do you know what he's talking about at the end? -&gt;friendApt-showNote-grow]]\n[[What did he succeed or fail at?-&gt;friendApt-showNote-failed]]\n[[Back.-&gt;friendApt-showNote]]",
+      "links": [
+        {
+          "name": "Do you know what he's talking about at the end? ",
+          "link": "friendApt-showNote-grow",
+          "pid": "80"
+        },
+        {
+          "name": "What did he succeed or fail at?",
+          "link": "friendApt-showNote-failed",
+          "pid": "81"
+        },
+        {
+          "name": "Back.",
+          "link": "friendApt-showNote",
+          "pid": "78"
+        }
+      ],
+      "name": "friendApt-showNote-paper",
+      "pid": "79",
+      "position": {
+        "x": "4900",
+        "y": "3050"
+      },
+      "tags": [
+        "loc_friendApt"
+      ]
+    },
+    {
+      "text": "\"Yeah, he always said: 'in order to grow you need to take root'. Kinda his personal motto, and why he worked so hard to move around as little as possible.\"\n\n[[What is this thing?-&gt;friendApt-showNote-paper]]\n[[What did he succeed or fail at?-&gt;friendApt-showNote-failed]]\n[[Back.-&gt;friendApt-showNote]]\n\n(set: $availLinks to it + (a:\"bar-drink-water-store\"))",
+      "links": [
+        {
+          "name": "What is this thing?",
+          "link": "friendApt-showNote-paper",
+          "pid": "79"
+        },
+        {
+          "name": "What did he succeed or fail at?",
+          "link": "friendApt-showNote-failed",
+          "pid": "81"
+        },
+        {
+          "name": "Back.",
+          "link": "friendApt-showNote",
+          "pid": "78"
+        }
+      ],
+      "name": "friendApt-showNote-grow",
+      "pid": "80",
+      "position": {
+        "x": "4900",
+        "y": "3350"
+      },
+      "tags": [
+        "loc_friendApt",
+        "code_array"
+      ]
+    },
+    {
+      "text": "\"I don't know. Lee always was trying to get something to change in the E.S.C. but people would either give him weird looks cause they just met him or he couldn't get any traction on the Net cause of how fast things move. Lately it felt like he turned more inward. I was worried that he gave up. Maybe he did something that really crossed the line.\"\n\n[[What is this thing?-&gt;friendApt-showNote-paper]]\n[[Do you know what he's talking about at the end? -&gt;friendApt-showNote-grow]]\n[[Back.-&gt;friendApt-showNote]]",
+      "links": [
+        {
+          "name": "What is this thing?",
+          "link": "friendApt-showNote-paper",
+          "pid": "79"
+        },
+        {
+          "name": "Do you know what he's talking about at the end? ",
+          "link": "friendApt-showNote-grow",
+          "pid": "80"
+        },
+        {
+          "name": "Back.",
+          "link": "friendApt-showNote",
+          "pid": "78"
+        }
+      ],
+      "name": "friendApt-showNote-failed",
+      "pid": "81",
+      "position": {
+        "x": "4900",
+        "y": "3175"
+      },
+      "tags": [
+        "loc_friendApt"
+      ]
+    },
+    {
+      "text": "You turn on the computer.\n\n&lt;div class=\"computer-text\"&gt;\nWelcome to first Time Setup. Please transfer over your account from a previous session or begin from scratch.\n&lt;/div&gt;\n\n[[Tap keycard-&gt;mysteryApt-computer-boot-error]]\n(if: $inv contains \"Hard Drive\")[ [[Restore from backup.-&gt;mysteryApt-computer-boot-restore]] ]\n[[Go back.-&gt;mysteryApt-computer]]",
+      "links": [
+        {
+          "name": "Tap keycard",
+          "link": "mysteryApt-computer-boot-error",
+          "pid": "83"
+        },
+        {
+          "name": "Restore from backup.",
+          "link": "mysteryApt-computer-boot-restore",
+          "pid": "84"
+        },
+        {
+          "name": "Go back.",
+          "link": "mysteryApt-computer",
+          "pid": "73"
+        }
+      ],
+      "name": "mysteryApt-computer-boot",
+      "pid": "82",
+      "position": {
+        "x": "7050",
+        "y": "2975"
+      },
+      "tags": [
+        "loc_mysteryApt",
+        "subloc_screen",
+        "code_array",
+        "code_gate"
+      ]
+    },
+    {
+      "text": "&lt;div class=\"computer-text\"&gt;\nWe're sorry, there are no saved accounts for the username \"Lee T.B.\" A ticket has automatically been created for you and an I.T. Personnel will be in contact with you to resolve this issue.\n&lt;/div&gt;\n\n[[Go back.-&gt;mysteryApt-computer]]\n\n&lt;!--CODE--&gt;\n(set: $availLinks to it + (a:))",
+      "links": [
+        {
+          "name": "Go back.",
+          "link": "mysteryApt-computer",
+          "pid": "73"
+        }
+      ],
+      "name": "mysteryApt-computer-boot-error",
+      "pid": "83",
+      "position": {
+        "x": "7200",
+        "y": "2975"
+      },
+      "tags": [
+        "loc_mysteryApt",
+        "subloc_screen",
+        "code_array"
+      ]
+    },
+    {
+      "text": "You fumble with the connectors doubtfully trying to plug this thing in. Finally it seems to catch.\n\n&lt;div class=\"computer-text\"&gt;\nRestoring from previous session...\n\nWelcome Lee T.B. Press any button to sign in.\n&lt;/div&gt;\n\n[[Press a button.-&gt;mysteryApt-computer-home]]\n(set: $availLinks to it + (a:\"mysteryApt-computer-home\"))",
+      "links": [
+        {
+          "name": "Press a button.",
+          "link": "mysteryApt-computer-home",
+          "pid": "111"
+        }
+      ],
+      "name": "mysteryApt-computer-boot-restore",
+      "pid": "84",
+      "position": {
+        "x": "7050",
+        "y": "3125"
+      },
+      "tags": [
+        "loc_mysteryApt",
+        "subloc_screen",
+        "code_array"
+      ]
+    },
+    {
+      "text": "You bring the drip up to your lips and choke it down. It leaves a sour taste and you know you'll be paying for that later on the toilet.\n\n[[\"Thanks.\"-&gt;bar-autoBartender-06]]",
+      "links": [
+        {
+          "name": "\"Thanks.\"",
+          "link": "bar-autoBartender-06",
+          "pid": "86"
+        }
+      ],
+      "name": "bar-autoBartender-05",
+      "pid": "85",
+      "position": {
+        "x": "4650",
+        "y": "1650"
+      },
+      "tags": [
+        "subloc_seat",
+        "loc_bar"
+      ]
+    },
+    {
+      "text": "\"Here... I've got something a little more appealing.\"\n\nHe rummages behind the counter and pulls out an unmarked bottle.\n\n\"Now...it's not exactly like the old stuff you know, but I think it tastes pretty close.\"\n\n[[Take a drink.-&gt;bar-autoBartender-07]]",
+      "links": [
+        {
+          "name": "Take a drink.",
+          "link": "bar-autoBartender-07",
+          "pid": "87"
+        }
+      ],
+      "name": "bar-autoBartender-06",
+      "pid": "86",
+      "position": {
+        "x": "4525",
+        "y": "1650"
+      },
+      "tags": [
+        "subloc_seat",
+        "loc_bar"
+      ]
+    },
+    {
+      "text": "It burns as it goes down and you immediately cough half of it out. Somehow the previous, accidental concoction was the better of the two.\n\nIt's creator gives out a big laugh.\n\n\"Ha Haaa! You naturals don't know a thing about acquired taste.\"\n\n[[What is that?-&gt;bar-autoBartender-08]]\n[[That's awful!-&gt;bar-autoBartender-08]]",
+      "links": [
+        {
+          "name": "What is that?",
+          "link": "bar-autoBartender-08",
+          "pid": "88"
+        },
+        {
+          "name": "That's awful!",
+          "link": "bar-autoBartender-08",
+          "pid": "88"
+        }
+      ],
+      "name": "bar-autoBartender-07",
+      "pid": "87",
+      "position": {
+        "x": "4400",
+        "y": "1650"
+      },
+      "tags": [
+        "subloc_seat",
+        "loc_bar"
+      ]
+    },
+    {
+      "text": "\"THAT is my special concoction. I call it Leonard's 'New' number seven! Ha! Though... I guess you wouldn't know what the old one tastes like.\"\n\nHe taps his temple.\n\n\"Made the taste all from memory. It doesn't really get you sloshed at all on account of how hard they purify everything around here but it'll give you a bit of a buzz.\"\n\n[[Thanks?-&gt;bar-autoBartender-09]]",
+      "links": [
+        {
+          "name": "Thanks?",
+          "link": "bar-autoBartender-09",
+          "pid": "100"
+        }
+      ],
+      "name": "bar-autoBartender-08",
+      "pid": "88",
+      "position": {
+        "x": "4275",
+        "y": "1650"
+      },
+      "tags": [
+        "subloc_seat",
+        "loc_bar"
+      ]
+    },
+    {
+      "text": "Nicola scoffs.\n\n\"I'd think you were ESC-SEC if you weren't so obvious about it.\n\nI know, to you, it might feel like you're constantly moving up and getting closer to getting your head out of the water but... you're as stagnant as Lee is. As I am. At least the both of us could acknowledge it.\"\n\n[[\"Is that legal?\"-&gt;friendApt-meetNicola-05a]]\n[[\"So what do you think happened to Lee?-&gt;friendApt-meetNicola-06]]",
+      "links": [
+        {
+          "name": "\"Is that legal?\"",
+          "link": "friendApt-meetNicola-05a",
+          "pid": "60"
+        },
+        {
+          "name": "\"So what do you think happened to Lee?",
+          "link": "friendApt-meetNicola-06",
+          "pid": "61"
+        }
+      ],
+      "name": "friendApt-meetNicola-05b",
+      "pid": "89",
+      "position": {
+        "x": "4675",
+        "y": "2725"
+      }
+    },
+    {
+      "text": "From you I don't want anything. But, if Lee left anything behind...\n\n[[Like what?-&gt;friendApt-meetNicola-08]]",
+      "links": [
+        {
+          "name": "Like what?",
+          "link": "friendApt-meetNicola-08",
+          "pid": "62"
+        }
+      ],
+      "name": "friendApt-meetNicola-07a",
+      "pid": "90",
+      "position": {
+        "x": "4400",
+        "y": "2650"
+      }
+    },
+    {
+      "text": "\"I don't know if there's anything that can be done for Lee. But, if you could get me somehting of his, maybe to help me understand.\"\n\n[[Like what?-&gt;friendApt-meetNicola-08]]",
+      "links": [
+        {
+          "name": "Like what?",
+          "link": "friendApt-meetNicola-08",
+          "pid": "62"
+        }
+      ],
+      "name": "friendApt-meetNicola-07b",
+      "pid": "91",
+      "position": {
+        "x": "4400",
+        "y": "2775"
+      }
+    },
+    {
+      "text": "(if: $inv contains \"Note from Lee\")[ [[Show Lee's Note to Nicola -&gt;friendApt-showNote]] ]\n(if: $inv contains \"Video Game\")[ [[Show the game to Nicola -&gt;friendApt-showGame]] ]",
+      "links": [
+        {
+          "name": "Show Lee's Note to Nicola ",
+          "link": "friendApt-showNote",
+          "pid": "78"
+        },
+        {
+          "name": "Show the game to Nicola ",
+          "link": "friendApt-showGame",
+          "pid": "77"
+        }
+      ],
+      "name": "friendApt-talkNicola",
+      "pid": "92",
+      "position": {
+        "x": "5500",
+        "y": "3000"
+      },
+      "tags": [
+        "loc_friendApt",
+        "code_gate"
+      ]
+    },
+    {
+      "text": "You pop open your bottle and start pouring the water into the soil, taking care not to let it spill over.\n\nFor a moment, you feel struck by the quiet satisfaction of caring for something that isn't a utlitarian machine.\n\nSuddenly, the plant jolts down about an inch. A loud click comes from near the bed.\n\n(set: $availLinks to it + (a:\"mysteryApt-screen-unlocked\"))",
+      "name": "mysteryApt-window-waterPlant",
+      "pid": "93",
+      "position": {
+        "x": "7050",
+        "y": "2675"
+      },
+      "tags": [
+        "loc_mysteryApt",
+        "subloc_window",
+        "code_array"
+      ]
+    },
+    {
+      "text": "Double-click this passage to edit it.",
+      "name": "inventory-water",
+      "pid": "94",
+      "position": {
+        "x": "5600",
+        "y": "250"
+      }
+    },
+    {
+      "text": "Double-click this passage to edit it.",
+      "name": "inventory-game",
+      "pid": "95",
+      "position": {
+        "x": "5800",
+        "y": "250"
+      }
+    },
+    {
+      "text": "Double-click this passage to edit it.",
+      "name": "inventory-keycard",
+      "pid": "96",
+      "position": {
+        "x": "6000",
+        "y": "250"
+      }
+    },
+    {
+      "text": "Double-click this passage to edit it.",
+      "name": "inventory-brokenKeycard",
+      "pid": "97",
+      "position": {
+        "x": "6200",
+        "y": "250"
+      }
+    },
+    {
+      "text": "Double-click this passage to edit it.",
+      "name": "inventory-fixedKeycard",
+      "pid": "98",
+      "position": {
+        "x": "6200",
+        "y": "100"
+      }
+    },
+    {
+      "text": "Double-click this passage to edit it.",
+      "name": "inventory-backupDrive",
+      "pid": "99",
+      "position": {
+        "x": "5800",
+        "y": "100"
+      }
+    },
+    {
+      "text": "\"My pleasure.\"\n\nHe stows away his toxic concoction.\n\n\"Well then, did I scare you off? Or are you going to stick around and enjoy the wonderful atmosphere we got down here?\"\n\n[[Talk to Leonard-&gt;bar-talkLeonard]]",
+      "links": [
+        {
+          "name": "Talk to Leonard",
+          "link": "bar-talkLeonard",
+          "pid": "101"
+        }
+      ],
+      "name": "bar-autoBartender-09",
+      "pid": "100",
+      "position": {
+        "x": "4150",
+        "y": "1650"
+      },
+      "tags": [
+        "subloc_seat",
+        "loc_bar"
+      ]
+    },
+    {
+      "text": "\"What can Lenny do for ya?\"\n\n[[Order a drink.-&gt;bar-orderDrink]]",
+      "links": [
+        {
+          "name": "Order a drink.",
+          "link": "bar-orderDrink",
+          "pid": "102"
+        }
+      ],
+      "name": "bar-talkLeonard",
+      "pid": "101",
+      "position": {
+        "x": "5500",
+        "y": "2000"
+      },
+      "tags": [
+        "loc_bar",
+        "subloc_seat"
+      ]
+    },
+    {
+      "text": "\"What'll it be?\"\n\n[[CarboFill (.005 eC)-&gt;bar-drink-common]]\n[[Joyful Green (.010 eC)-&gt;bar-drink-common]]\n[[KaleAle (0.20 eC)-&gt;bar-drink-common]]\n[[The \"special\" stuff-&gt;bar-drink-special]]\n[[Just some water-&gt;bar-drink-water]]",
+      "links": [
+        {
+          "name": "CarboFill (.005 eC)",
+          "link": "bar-drink-common",
+          "pid": "103"
+        },
+        {
+          "name": "Joyful Green (.010 eC)",
+          "link": "bar-drink-common",
+          "pid": "103"
+        },
+        {
+          "name": "KaleAle (0.20 eC)",
+          "link": "bar-drink-common",
+          "pid": "103"
+        },
+        {
+          "name": "The \"special\" stuff",
+          "link": "bar-drink-special",
+          "pid": "104"
+        },
+        {
+          "name": "Just some water",
+          "link": "bar-drink-water",
+          "pid": "105"
+        }
+      ],
+      "name": "bar-orderDrink",
+      "pid": "102",
+      "position": {
+        "x": "5200",
+        "y": "2000"
+      },
+      "tags": [
+        "loc_bar",
+        "subloc_seat"
+      ]
+    },
+    {
+      "text": "Leonard yanks out a beverage pack from the robot and squeezes it into a glass. You sip it until you've had enough.\n\n[[Talk to Leonard.-&gt;bar-talkLeonard]]",
+      "links": [
+        {
+          "name": "Talk to Leonard.",
+          "link": "bar-talkLeonard",
+          "pid": "101"
+        }
+      ],
+      "name": "bar-drink-common",
+      "pid": "103",
+      "position": {
+        "x": "5000",
+        "y": "1900"
+      },
+      "tags": [
+        "loc_bar",
+        "subloc_seat"
+      ]
+    },
+    {
+      "text": "\"I knew it'd grow on ya!\"\n\nLeonard pours the brown liquid into your glass. It requires quite a few sips to get down and all it really did was give you a headache.\n\n[[Talk to Leonard.-&gt;bar-talkLeonard]]",
+      "links": [
+        {
+          "name": "Talk to Leonard.",
+          "link": "bar-talkLeonard",
+          "pid": "101"
+        }
+      ],
+      "name": "bar-drink-special",
+      "pid": "104",
+      "position": {
+        "x": "5000",
+        "y": "2025"
+      },
+      "tags": [
+        "loc_bar",
+        "subloc_seat"
+      ]
+    },
+    {
+      "text": "\"Water? You've got all the water you need all around you!\"\n\nLeonard gives you a big slap on your shoulder.\n\n\"Aw I'm just fooling around.\"\n\nHe goes into the back before bringing out a glass with water.\n\n[[Drink water.-&gt;bar-drink-water-drink]]\n(if: $availLinks contains \"bar-drink-water-store\")[ [[Take water with you.-&gt;bar-drink-water-store]] ]",
+      "links": [
+        {
+          "name": "Drink water.",
+          "link": "bar-drink-water-drink",
+          "pid": "106"
+        },
+        {
+          "name": "Take water with you.",
+          "link": "bar-drink-water-store",
+          "pid": "107"
+        }
+      ],
+      "name": "bar-drink-water",
+      "pid": "105",
+      "position": {
+        "x": "5000",
+        "y": "2150"
+      },
+      "tags": [
+        "loc_bar",
+        "subloc_seat",
+        "code_gate"
+      ]
+    },
+    {
+      "text": "You gulp down the water. Could be colder but otherwise refreshing.\n\n[[Talk to Leonard.-&gt;bar-talkLeonard]]",
+      "links": [
+        {
+          "name": "Talk to Leonard.",
+          "link": "bar-talkLeonard",
+          "pid": "101"
+        }
+      ],
+      "name": "bar-drink-water-drink",
+      "pid": "106",
+      "position": {
+        "x": "4850",
+        "y": "2150"
+      },
+      "tags": [
+        "loc_bar",
+        "subloc_seat"
+      ]
+    },
+    {
+      "text": "You pour the water into a bottle and put it into your bag.\n\n[[Talk to Leonard.-&gt;bar-talkLeonard]]\n\n(set: $inv to it + (a:\"Water Bottle\"))",
+      "links": [
+        {
+          "name": "Talk to Leonard.",
+          "link": "bar-talkLeonard",
+          "pid": "101"
+        }
+      ],
+      "name": "bar-drink-water-store",
+      "pid": "107",
+      "position": {
+        "x": "4850",
+        "y": "2275"
+      },
+      "tags": [
+        "loc_bar",
+        "subloc_seat",
+        "code_array"
+      ]
+    },
+    {
+      "text": "A decoration screen hangs above the bed, playing footage of natural landscapes and creatures now long gone.\n\n[[Take down the screen.-&gt;mysteryApt-screen-behind]]\n(if: $availLinks contains \"mysteryApt-screen-unlocked\")[[Inspect a raised corner.-&gt;mysteryApt-screen-unlocked]]\n[[Go back.-&gt;mysteryApt]]",
+      "links": [
+        {
+          "name": "Take down the screen.",
+          "link": "mysteryApt-screen-behind",
+          "pid": "109"
+        },
+        {
+          "name": "Inspect a raised corner.",
+          "link": "mysteryApt-screen-unlocked",
+          "pid": "110"
+        },
+        {
+          "name": "Go back.",
+          "link": "mysteryApt",
+          "pid": "12"
+        }
+      ],
+      "name": "mysteryApt-screen",
+      "pid": "108",
+      "position": {
+        "x": "7200",
+        "y": "2800"
+      },
+      "tags": [
+        "loc_mysteryApt",
+        "subloc_screen",
+        "code_gate"
+      ]
+    },
+    {
+      "text": "You take down the screen to reveal...\n\na solid wall.\n\nOh well, not everything is hiding something.\n\n[[Put the screen back.-&gt;mysteryApt]]",
+      "links": [
+        {
+          "name": "Put the screen back.",
+          "link": "mysteryApt",
+          "pid": "12"
+        }
+      ],
+      "name": "mysteryApt-screen-behind",
+      "pid": "109",
+      "position": {
+        "x": "7400",
+        "y": "2725"
+      },
+      "tags": [
+        "loc_mysteryApt",
+        "subloc_screen"
+      ]
+    },
+    {
+      "text": "You bring your attention to a raised corner. As soon as you touch it, it slides out to reveal a &lt;span class=\"key-item\"&gt;hard drive&lt;/span&gt;. It's labelled \"backup boot\".\n\n[[Take the drive.-&gt;mysteryApt]]\n(set: $inv to it + (a:\"Hard Drive\"))\n(set: $availLinks to it - (a:\"mysteryApt-screen-unlocked\"))",
+      "links": [
+        {
+          "name": "Take the drive.",
+          "link": "mysteryApt",
+          "pid": "12"
+        }
+      ],
+      "name": "mysteryApt-screen-unlocked",
+      "pid": "110",
+      "position": {
+        "x": "7400",
+        "y": "2850"
+      },
+      "tags": [
+        "loc_mysteryApt",
+        "subloc_screen",
+        "code_array"
+      ]
+    },
+    {
+      "text": "The screen suddenly goes blank. Maybe this was a faulty boot?\n\nWIP.",
+      "name": "mysteryApt-computer-home",
+      "pid": "111",
+      "position": {
+        "x": "7050",
+        "y": "3275"
+      },
+      "tags": [
+        "loc_mysteryApt"
+      ]
+    }
+  ],
+  "name": "AdventureXR – Cyberspace v0.5_Simplified",
+  "startnode": "1",
+  "creator": "Twine",
+  "creator-version": "2.3.13",
+  "ifid": "AD724452-6BE1-4F97-90AC-CF98ABF62E03"
+}</pre>
+    <div id="storyData" style="display: none;">
+      <tw-storydata name="AdventureXR – Cyberspace v0.5_Simplified" startnode="1" creator="Twine" creator-version="2.3.13" ifid="AD724452-6BE1-4F97-90AC-CF98ABF62E03" zoom="0.6" format="Twison" format-version="0.0.1" options="" hidden=""><style role="stylesheet" id="twine-user-stylesheet" type="text/twine-css">
+.computer-text {
+  font-family: "Lucida Console", "Courier New", monospace;
+}</style><script role="script" id="twine-user-script" type="text/twine-javascript">
+
+</script><tw-tag name="hideHub" color="gray"></tw-tag><tw-passagedata pid="1" name="Introduction" tags="code_array" position="6000,600" size="200,100">{
+&lt;!--THIS IS THE INTRODUCTION--&gt;
+&lt;!--Imagine: The Bathosphere intro in Bioshock.--&gt;
+
+&lt;!--set variables--&gt;
+(set: $playerName to "Lanier")
+(set: $inv to (a:)) &lt;!--inventory--&gt;
+(set: $availLinks to (a:))}
+
+&lt;div class:"forDevsOnly"&gt;
+#TEMP: For Devs:
+Visual: Exterior of the City.
+Assets: City Exterior Model.
+&lt;img 
+src="https://cdn.discordapp.com/attachments/818234840214274101/821490463042568212/unknown.png"&gt;
+
+Post
+ Climate City. Lower Classes relegated to below sea level, while upper 
+classes are privileged with exposure to sunlight. Uniform architecture, 
+sturdy but narrow pyramids.
+
+(link: "About the world")[Our story takes place in The Eastern Statenal 
+Collective (E.S.C), a self sustaining megalopolis contained entirely 
+within climate controlled towers. The ESC's Mission Statement (predating
+ it's founding and construction) states that it, as well as it's 
+citizens, are strong in their independence, with an emphasis on "forging
+ their own path" and frequent mobility.
+
+Random stuff:
+
+* It is the norm for people to constantly be moving from floor to floor,
+ each floor has something slightly unique to shake things up, and the 
+core motivation for citizens is to reach the secure and luxurious upper 
+echelons of their society (a pipe dream).
+* Identity can be changed at will by it's citizens, anonymity is a right
+* Following the fracturing of the internet, the ESC has it's own unique 
+network: NetESC. All members are anonymous with no way of seeing a 
+throughline between posts (though job titles are shown when verification
+ is necessary)
+* Traditional social websites have been replaced with direct 
+communication between members.]
+&lt;/div&gt;
+
+---
+[[Start-&gt;playerApt-intro]]</tw-passagedata><tw-passagedata pid="2" name="playerApt-intro" tags="loc_playerApt" position="6500,900" size="200,100">&lt;div
+ data-location="playerApt"&gt;
+&lt;h1 class="locationHeader"&gt;Your Apartment&lt;/h1&gt;
+
+The room shudders as it docks into yet another floor of the monolithic 
+complex.
+"Good Morning, $playerName. You are docked in Block B82-CC today. We 
+will remain here until the completion of your work assignment."
+
+[[Look around. -&gt;playerApt]]
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="3" name="friendAptExt" tags="loc_friendAptExt" position="5500,2400" size="200,200">&lt;!-------------------------------CONTENT----------------------------------&gt;
+&lt;h1 class="locationHeader"&gt;Outside of Nicola's Apartment (B82-73)&lt;/h1&gt;
+
+[[Knock on the door. -&gt;friendApt]]</tw-passagedata><tw-passagedata pid="4" name="bar-intro" tags="loc_bar" position="5500,1525" size="200,100">You
+ step down a few steps and into a bar.
+
+The space is tiny, holding only about 3 people at the bar itself. A TV 
+shows some long past sports game. Behind the counter lies a robotic 
+device with arms and a spout.
+
+[[Take a seat.-&gt;bar-autoBartender-00]]</tw-passagedata><tw-passagedata pid="5" name="security-intro" tags="loc_security code_array" position="5500,900" size="200,100">You approach the security desk.
+
+[[Look around.-&gt;security]]
+
+(set: $availLinks to it - (a:"security-intro"))
+(set: $availLinks to it + (a:"security"))</tw-passagedata><tw-passagedata pid="6" name="mysteryAptExt" tags="loc_mysteryAptExt code_gate" position="6500,2200" size="200,200">&lt;h1 class="locationHeader"&gt;Outside of Apartment B82-77&lt;/h1&gt;
+
+Apartment B82-77, between B82-76 and B82-78.
+
+(if: $inv contains "Fixed Keycard")[ [[Use keycard.-&gt;mysteryAptExt-unlocked]] ]
+(else:)[[[Use keycard.-&gt;mysteryAptExt-lockedDoor]]]
+
+[[Go to hub.-&gt;hub]]</tw-passagedata><tw-passagedata pid="7" name="Inside the Network" tags="" position="6450,3575" size="100,100">WIP.
+ Dialog with misingperson/final scene. Explains how to fully become one 
+with the machine and enter a new natural utopia. Probably have 
+questioning dialog options on how you're just running away from reality.
+ Utopia is the shorter ending whereas go home might have a bit more of a
+ falling action talking to Nicola and such.
+
+[[Utopia]]
+[[Go Home]]</tw-passagedata><tw-passagedata pid="8" name="Utopia" tags="" position="6650,3500" size="100,100">Utopia ending.</tw-passagedata><tw-passagedata pid="9" name="Go Home" tags="" position="6650,3625" size="100,100">End.</tw-passagedata><tw-passagedata pid="10" name="ignoreme" tags="" position="4300,575" size="100,100">"Look,
+ it's important to comment even the simplest code...|more)[ You might 
+remember what it does now, but not at 4:50 PM on Friday afternoon, when 
+you're about to push to production and a runtime error shows up in it.]"
+
+You (link-reveal:"struggle to listen.")[(show: ?more)] </tw-passagedata><tw-passagedata pid="11" name="inventory" tags="code_gate" position="5400,100" size="100,200">&lt;h2&gt;Inventory&lt;/h2&gt;
+
+(if: $inv contains "Water Bottle")[ [[inventory-water]] ]
+(if: $inv contains "Note from Lee")[ [[inventory-note]] ]
+(if: $inv contains "Video Game")[ [[inventory-game]] ]
+(if: $inv contains "Keycard")[ [[inventory-keycard]] ]
+(else-if: $inv contains "Broken Keycard")[ [[inventory-brokenKeycard]] ]
+(else-if: $inv contains "Fixed Keycard")[ [[inventory-fixedKeycard]] ]
+(if: $inv contains "Hard Drive")[ [[inventory-backupDrive]] ]
+
+
+(print: $inv)</tw-passagedata><tw-passagedata pid="12" name="mysteryApt" tags="loc_mysteryApt" position="6500,2650" size="200,200">&lt;h1
+ class="locationHeader"&gt;Lee's Apartment&lt;/h1&gt;
+
+There's very little out of the ordinary in this room, with it's layout 
+being nearly identical to yours. It's nearly impeccably clean, aside 
+from a broken flowerpot below a dark window. Behind the bed is a 
+decoration screen.
+
+[[Inspect drawers.-&gt;mysteryApt-drawers]]
+[[Look at window.-&gt;mysteryApt-window]]
+[[Look at screen.-&gt;mysteryApt-screen]]
+[[Look at computer.-&gt;mysteryApt-computer]]</tw-passagedata><tw-passagedata pid="13" name="friendApt" tags="loc_friendApt code_gate" position="5500,2700" size="200,200">&lt;h1
+ class="locationHeader"&gt;Nicola's Apartment&lt;/h1&gt;
+
+Nicola lets you in.
+
+It's identical in design and layout to yours. Near the corner is a work 
+bench littered with wires, small parts and pieces of silicon. There are 
+drawings above the bench – a murky view of the E.S.C. and a portrait of a
+ thin, short-haired man.
+
+(if: $availLinks contains "friendApt-meetNicola-00")[ [[Talk to 
+Nicola-&gt;friendApt-meetNicola-00]] ]
+(else:)[ [[Talk to Nicola-&gt;friendApt-talkNicola]] ]</tw-passagedata><tw-passagedata pid="14" name="Room Template" tags="" position="4500,575" size="100,100">{&lt;div data-location="location"&gt;
+&lt;!---------------------------------CODE-----------------------------------&gt;
+&lt;!--First Time datamap initialization--&gt;
+(if: $rm_LOCATION's timesVisited &lt; 1)[
+	&lt;!--set array of items available to pickup in room--&gt;
+	(set: $rm_LOCATION's items to it + (a:))
+	(set: $rm_LOCATION's actions to it + (a:))
+	&lt;!----&gt;
+]
+
+&lt;!--Runs Every Room Visit--&gt;
+(set: $rm_LOCATION's timesVisited to it + 1)
+}
+&lt;!-------------------------------CONTENT----------------------------------&gt;
+&lt;h1 class="locationHeader"&gt;Room Titlet&lt;/h1&gt;
+
+(link:"Look around.")[Room Desc&lt;br&gt;]
+&lt;/div&gt;&lt;!--At end of passage--&gt;</tw-passagedata><tw-passagedata pid="15" name="playerApt" tags="loc_playerApt code_gate" position="6500,1025" size="200,200">&lt;h1
+ class="locationHeader"&gt;Your Apartment&lt;/h1&gt;
+
+&lt;h3 class="clickedAction"&gt;You look around.&lt;/h3&gt;
+
+Your modest mobile apartment. Designed to move with you around the 
+E.S.C. and hold the most accomodation in the most efficient space 
+possible. A plastic house plant is on the desk, by the computer. A 
+nutrition station sits along the far wall.
+
+[[Look at plant. -&gt;playerApt-lookAtPlant]]
+[[Order Food. -&gt;playerApt-nutritionStation]]
+[[Bed. -&gt;playerApt-Bed]]
+[[Check Computer. -&gt;playerApt-computer]]
+
+(if: $availLinks contains "hub")[ [[Go to Hub. -&gt;hub]] ]
+(else-if: $availLinks contains "hub-intro")[ [[Leave room. 
+-&gt;hub-intro]] ]</tw-passagedata><tw-passagedata pid="16" name="playerApt-lookAtPlant" tags="loc_playerApt subloc_plant" position="6800,775" size="100,100">&lt;h1
+ class="locationHeader"&gt;Your Apartment&lt;/h1&gt;
+
+It's not much, but it's something to make this place feel a little more 
+like a home. One day, when you get to dock in a level that has sunlight,
+ you'll splurge and buy a real, living, one.
+
+[[Go Back. -&gt;playerApt]]</tw-passagedata><tw-passagedata pid="17" name="playerApt-nutritionStation" tags="itemInteraction loc_playerApt subloc_nutrition" position="6800,1025" size="100,200">&lt;h1 class="locationHeader"&gt;Your Apartment&lt;/h1&gt;
+
+&lt;h3 class="clickedAction"&gt;You visit the nutrition station.&lt;/h3&gt;
+
+What do you order?
+[[Banana Blast (.015 eC)-&gt;playerApt-nutritionStation-banana]]
+[[CarboFill (.005 eC)-&gt;playerApt-nutritionStation-carb]]
+[[Joyful Green (.010 eC)-&gt;playerApt-nutritionStation-joyful]]
+[[Go Back. -&gt;playerApt]]</tw-passagedata><tw-passagedata pid="18" name="playerApt-Bed" tags="loc_playerApt subloc_bed" position="6800,900" size="100,100">&lt;h1 class="locationHeader"&gt;Your Apartment&lt;/h1&gt;
+
+&lt;h3 class="clickedAction"&gt;You go to your bed.&lt;/h3&gt;
+
+Nothing more than a synthetic mattress and a sheet.
+
+[[Go Back. -&gt;playerApt]]</tw-passagedata><tw-passagedata pid="19" name="playerApt-computer" tags="itemInteraction loc_playerApt subloc_computer code_gate" position="6800,1300" size="100,200">&lt;h1 class="locationHeader"&gt;Your Apartment&lt;/h1&gt;
+
+You turn the computer on.
+
+(if: $inv contains "Keycard")[
+	[[Review assignment.-&gt;playerApt-computer-reviewAssign]]
+]
+(else:)[
+	[[Check new assignment.-&gt;playerApt-computer-newAssign-00]]
+]
+[[Check ESC-NET.-&gt;playerApt-computer-net]]
+[[Check ESC-Chart.-&gt;playerApt-computer-chart]]
+[[Log off. -&gt;playerApt]]</tw-passagedata><tw-passagedata pid="20" name="playerApt-nutritionStation-banana" tags="dialogChoice loc_playerApt" position="7100,900" size="100,100">&lt;h1
+ class="locationHeader"&gt;Your Apartment&lt;/h1&gt;
+
+Another health drink sent via central piping and into your cup. It 
+apparently is called banana blast. The taste might be accurate to it's 
+name but you don't know for sure.
+
+[[Back. -&gt;playerApt]]</tw-passagedata><tw-passagedata pid="21" name="playerApt-nutritionStation-carb" tags="dialogChoice loc_playerApt" position="7100,1025" size="100,100">&lt;h1
+ class="locationHeader"&gt;Your Apartment&lt;/h1&gt;
+
+Another drink sent via central piping and into your cup. It's thick and 
+tough to choke down, but you can't complain for only .005 eC.
+
+[[Back. -&gt;playerApt]]</tw-passagedata><tw-passagedata pid="22" name="playerApt-nutritionStation-joyful" tags="dialogChoice loc_playerApt" position="7100,1150" size="100,100">&lt;h1
+ class="locationHeader"&gt;Your Apartment&lt;/h1&gt;
+
+Another drink sent via central piping and into your cup. It's filling 
+but there's something off-putting about it. Maybe algae just isn't 
+compatible with your palette.
+
+[[Back. -&gt;playerApt]]</tw-passagedata><tw-passagedata pid="23" name="playerApt-computer-newAssign-00" tags="loc_playerApt subloc_computer" position="7100,1550" size="100,100">&lt;h1
+ class="locationHeader"&gt;Your Apartment&lt;/h1&gt;
+
+You read the briefing on your assignment for the day.
+
+&lt;div class="computer-text"&gt;"Good Morning, $playerName. Your room 
+has been fitted to level B82-CC. Tomorrow you will be transferred to 
+B80-DE. E.S.C. Relocation &amp; Recycling would like to thank you for a 
+good job on....&lt;/div&gt;
+
+[[uhh.-&gt;playerApt-computer-newAssign-01]]</tw-passagedata><tw-passagedata pid="24" name="playerApt-computer-chart" tags="loc_playerApt subloc_computer" position="7100,1425" size="100,100">&lt;h1 class="locationHeader"&gt;Your Apartment&lt;/h1&gt;
+
+You check your ESC-CHART Dashboard.
+
+escCoin Balance: 24.983 eC.
+Current Dock: B82-CC.
+
+Merit challenges:
+• Complete 30 assignments in 30 days for a 30% merit boost.
+	- Completion:0/30
+
+[[Go back. -&gt;playerApt-computer]]
+[[Log off. -&gt;playerApt]]</tw-passagedata><tw-passagedata pid="25" name="playerApt-computer-net" tags="loc_playerApt subloc_computer" position="7100,1300" size="100,100">&lt;h1 class="locationHeader"&gt;Your Apartment&lt;/h1&gt;
+
+A digest of news around the E.S.C. Nothing notable.
+
+[[Go back. -&gt;playerApt-computer]]
+[[Log off. -&gt;playerApt]]</tw-passagedata><tw-passagedata pid="26" name="playerApt-computer-newAssign-01" tags="loc_playerApt subloc_computer" position="7225,1550" size="100,100">&lt;h1 class="locationHeader"&gt;Your Apartment&lt;/h1&gt;
+
+&lt;div class="computer-text"&gt;err: no item in employee.assignmenthistory has attribute "commend"&lt;/div&gt;
+
+[[They really need to fix that.-&gt;playerApt-computer-newAssign-02]]</tw-passagedata><tw-passagedata pid="27" name="playerApt-computer-newAssign-02" tags="loc_playerApt subloc_computer" position="7350,1550" size="100,100">&lt;h1
+ class="locationHeader"&gt;Your Apartment&lt;/h1&gt;
+
+&lt;div class="computer-text"&gt;Your assignment today is to "clear out 
+Apartment B82-77". All items must be sorted for structure-wide 
+recycling.
+
+This job has been labelled as High Priority. It must be completed within
+ 6 hours.
+
+Materials for this job are: B82-77 Keycard. Printing now...&lt;/div&gt;
+
+[[Take keycard.-&gt;playerApt-computer-newAssign-03]]</tw-passagedata><tw-passagedata pid="28" name="playerApt-computer-newAssign-03" tags="loc_playerApt subloc_computer code_array" position="7475,1550" size="100,100">&lt;h1
+ class="locationHeader"&gt;Your Apartment&lt;/h1&gt;
+
+Keycard has been added to your inventory.
+
+&lt;div class="computer-text"&gt;Additional Notes: "Tenent requested 
+manual relocation. Please complete ASAP and move all materials into a 
+transportation unit." 
+
+Thank you for your commitment to your fellow residents. 
+- E.S.C. Central Relocation and Recycling
+&lt;em&gt;Class Mobility and Human Sustainability&lt;/em&gt;
+&lt;/div&gt;
+
+[[Go back. -&gt;playerApt-computer]]
+[[Log off. -&gt;playerApt]]
+
+(set: $inv to it + (a: "Keycard")) &lt;!--add keycard to inventory--&gt;
+(set: $availLinks to it + (a: "hub-intro", "mysteryAptExt-intro")) 
+&lt;!--add hub and mystery apartment to available rooms--&gt;</tw-passagedata><tw-passagedata pid="29" name="playerApt-computer-reviewAssign" tags="loc_playerApt subloc_computer" position="7100,1675" size="100,100">&lt;h1 class="locationHeader"&gt;Your Apartment&lt;/h1&gt;
+
+&lt;div class="computer-text"&gt;
+Your assignment today is to "clear out Apartment B82-77". All items must be sorted for structure-wide recycling.
+
+This job has been labelled as High Priority. It must be completed within 6 hours.
+
+Additional Notes: "Tenent requested manual relocation. Please complete ASAP and move all materials into a transportation unit." 
+
+Thank you for your commitment to your fellow residents. 
+- E.S.C. Central Relocation and Recycling
+&lt;em&gt;Class Mobility and Human Sustainability&lt;/em&gt;
+&lt;/div&gt;
+
+[[Go back. -&gt;playerApt-computer]]
+[[Log off. -&gt;playerApt]]</tw-passagedata><tw-passagedata pid="30" name="hub-intro" tags="loc_hub" position="6000,1375" size="200,100">&lt;h1
+ class="locationHeader"&gt;Central Hub&lt;/h1&gt;
+
+Your apartment door opens with a pressurized hiss. The hallway is mostly
+ empty and blurs into the counless others you've walked through in the 
+E.S.C. You turn towards the block's central hub to orient yourself.
+
+[[Go to hub.-&gt;hub]]
+
+(set: $availLinks to it - (a:"hub-intro"))
+(set: $availLinks to it + (a:"hub", "playerApt", "bar"))</tw-passagedata><tw-passagedata pid="31" name="hub" tags="loc_hub code_gate" position="6000,1500" size="200,200">&lt;h1 class="locationHeader"&gt;Central Hub&lt;/h1&gt;
+
+The central hub. Connecting residents, ESC-SEC and whatever small attractions this particular floor has.
+
+(if: $availLinks contains "playerApt")[ [[playerApt]] ]
+(if: $availLinks contains "mysteryApt")[ [[mysteryApt]] ]
+(else-if: $availLinks contains "mysteryAptExt")[ [[mysteryAptExt]] ]
+(else-if: $availLinks contains "mysteryAptExt-intro")[ [[mysteryAptExt-intro]] ]
+(if: $availLinks contains "bar-intro")[ [[bar-intro]] ]
+(else-if: $availLinks contains "bar")[ [[bar]] ]
+(if: $availLinks contains "security")[ [[security]] ]
+(else-if: $availLinks contains "security-intro")[ [[security-intro]] ]
+(if: $availLinks contains "friendApt")[ [[friendApt]] ]
+(else-if: $availLinks contains "friendAptExt")[ [[friendAptExt]] ]</tw-passagedata><tw-passagedata pid="32" name="mysteryAptExt-intro" tags="loc_mysteryAptExt code_array" position="6500,2000" size="200,100">&lt;h1 class="locationHeader"&gt;Outside of Apartment B82-77&lt;/h1&gt;
+
+You walk down a spoke and arrive at Apartment B82-77.
+
+[[There's someone by the door.-&gt;mysteryAptExt-talkNicola-00]]
+
+(set: $availLinks to it - (a:"mysteryAptExt-intro"))
+(set: $availLinks to it + (a:"mysteryAptExt"))</tw-passagedata><tw-passagedata pid="33" name="mysteryAptExt-talkNicola-00" tags="loc_mysteryAptExt" position="6800,2000" size="100,100">A younger resident leans by the door, trying to make herself not too noticeable despite looking aorund anxiously.
+
+It seems like she's waiting on [[you. -&gt;mysteryAptExt-talkNicola-01]]</tw-passagedata><tw-passagedata pid="34" name="mysteryAptExt-talkNicola-01" tags="loc_mysteryAptExt" position="6925,2000" size="100,100">She slowly approaches.
+"Hey are you...?"
+
+[[Huh? -&gt;mysteryAptExt-talkNicola-02]]</tw-passagedata><tw-passagedata pid="35" name="mysteryAptExt-talkNicola-02" tags="loc_mysteryAptExt" position="7050,2000" size="100,100">She quickly inspects you looking at your uniform. do you know her?
+"Oh, um, nevermind."
+
+[[Okay...-&gt;mysteryAptExt-talkNicola-03]]</tw-passagedata><tw-passagedata pid="36" name="mysteryAptExt-talkNicola-03" tags="loc_mysteryAptExt" position="7175,2000" size="100,100">She walks back, slightly further away and pretends to look at something down the hall.
+
+[[Use keycard on apartment door.-&gt;mysteryAptExt-talkNicola-04]]</tw-passagedata><tw-passagedata pid="37" name="mysteryAptExt-talkNicola-04" tags="loc_mysteryAptExt code_array" position="7300,2000" size="100,100">You bring your keycard to the door but it doesn't open.
+
+[[Typical.-&gt;mysteryAptExt-talkNicola-05]]
+
+(set: $availLinks to it + (a:"security-intro"))
+(set: $inv to it - (a:"Keycard"))
+(set: $inv to it + (a:"Broken Keycard"))
+</tw-passagedata><tw-passagedata pid="38" name="mysteryAptExt-talkNicola-05" tags="loc_mysteryAptExt" position="7425,2000" size="100,100">The person by the door walks up to you.
+"You're from R&amp;R right? Not ESC-SEC?"
+
+[[Yeah?-&gt;mysteryAptExt-talkNicola-06]]</tw-passagedata><tw-passagedata pid="39" name="mysteryAptExt-talkNicola-06" tags="loc_mysteryAptExt" position="7550,2000" size="100,100">She hesistates before quickly speaking.
+
+"I know you probably can't but... if you find anything in there, would you let me have a look?"
+
+[[This stuff is going to a tenent.-&gt;mysteryAptExt-talkNicola-07]]</tw-passagedata><tw-passagedata pid="40" name="mysteryAptExt-talkNicola-07" tags="loc_mysteryAptExt" position="7675,2000" size="100,100">She looks visibly confused.
+
+"What? No that's... Lee didn't move, he's just gone."
+
+[[He died?-&gt;mysteryAptExt-talkNicola-08]]</tw-passagedata><tw-passagedata pid="41" name="mysteryAptExt-talkNicola-08" tags="loc_mysteryAptExt" position="7800,2000" size="100,100">It's
+ unusual that they would get the job type wrong but, then again, this 
+wouldn't be the first time they dropped a corpse on you without notice.
+
+"He's not dead. At least...if he is then they're hiding something."
+
+[[Who is?-&gt;mysteryAptExt-talkNicola-09]]</tw-passagedata><tw-passagedata pid="42" name="mysteryAptExt-talkNicola-09" tags="loc_mysteryAptExt code_array" position="7925,2000" size="100,100">She looks towards the ESC-SEC desk.
+
+"Look, why don't we talk in my apartment? It's B82-73. I'm Nicola."
+
+Before you can probe further, she leaves.
+
+[[Try keycard again.-&gt;mysteryAptExt-lockedDoor]]
+
+(set: $availLinks to it + (a:"friendAptExt"))
+(set: $availLinks to it + (a:"friendApt-meetNicola-00"))</tw-passagedata><tw-passagedata pid="43" name="mysteryAptExt-lockedDoor" tags="loc_mysteryAptExt" position="8100,2200" size="100,100">Still nothing. You'll have to go to the ESC-SEC desk to get the keycard fixed.
+
+[[Go to hub.-&gt;hub]]</tw-passagedata><tw-passagedata pid="44" name="mysteryAptExt-unlocked" tags="loc_mysteryAptExt" position="6800,2300" size="100,100">The door lock chimes.
+
+[[Enter Apt B82-77-&gt;mysteryApt-intro]]</tw-passagedata><tw-passagedata pid="45" name="security" tags="loc_security" position="5500,1025" size="200,200">&lt;h1 class="locationHeader"&gt;E.S.C. Security Desk&lt;/h1&gt;
+
+&lt;div class:"forDevsOnly"&gt;
+#For Devs:
+  *Location: Kind of like a bank teller counter, no interior needs to be modelled.
+  *Assets: Computer, Security Guard Model
+&lt;/div&gt;
+
+A standard issue ESC-SEC desk. You can barely make out the silhoutte of a Peacekeeper behind the frosted glass.
+
+[[Talk to peacekeeper.-&gt;security-talk]]
+[[Go to Hub. -&gt;hub]]</tw-passagedata><tw-passagedata pid="46" name="security-talk" tags="loc_security code_gate" position="5300,1100" size="100,100">&lt;h1 class="locationHeader"&gt;E.S.C. Security Desk&lt;/h1&gt;
+
+You approach the peacekeeper. He seems preoccupied with something on his screen.
+
+(if: $inv contains "Broken Keycard")[ [[Fix Keycard-&gt;security-fixKeycard-00]] ]</tw-passagedata><tw-passagedata pid="47" name="security-fixKeycard-00" tags="loc_security" position="5150,1100" size="100,100">&lt;h1 class="locationHeader"&gt;E.S.C. Security Desk&lt;/h1&gt;
+
+You explain that you need your keycard fixed for your job.
+
+The peacekeeper takes your keycard, barely registering you as a human in front of him. He does his magic.
+
+[[Wait.-&gt;security-fixKeycard-01]]</tw-passagedata><tw-passagedata pid="48" name="security-fixKeycard-01" tags="loc_security" position="5000,1100" size="100,100">&lt;h1 class="locationHeader"&gt;E.S.C. Security Desk&lt;/h1&gt;
+
+Error chimes and frustrated noises come from the shadow behind the glass. It gives an exaggerated sigh.
+
+[[...-&gt;security-fixKeycard-02]]</tw-passagedata><tw-passagedata pid="49" name="security-fixKeycard-02" tags="loc_security" position="4825,1100" size="100,100">&lt;h1 class="locationHeader"&gt;E.S.C. Security Desk&lt;/h1&gt;
+
+Another silhouette joins the first. They stand by the computer muttering about security clearances and administrator overrides.
+
+[[Listen in.-&gt;security-fixKeycard-03]]
+[[Wait.-&gt;security-fixKeycard-04]]
+</tw-passagedata><tw-passagedata pid="50" name="security-fixKeycard-03" tags="loc_security" position="4750,1250" size="100,100">&lt;h1 class="locationHeader"&gt;E.S.C. Security Desk&lt;/h1&gt;
+
+You pretend to look down the hall but focus in on what they're saying.
+
+"How the hell does an R&amp;R guy get clearance but not us?"...."It doesn't matter it checks out."
+
+[[...-&gt;security-fixKeycard-04]]</tw-passagedata><tw-passagedata pid="51" name="security-fixKeycard-04" tags="loc_security code_array" position="4675,1100" size="100,100">&lt;h1 class="locationHeader"&gt;E.S.C. Security Desk&lt;/h1&gt;
+
+Finally, a reassuring beep.
+
+"You're all set."
+
+[[Thanks.-&gt;security-fixKeycard-05]]
+
+(set: $inv to it - (a:"Broken Keycard"))
+(set: $inv to it + (a:"Fixed Keycard"))</tw-passagedata><tw-passagedata pid="52" name="security-fixKeycard-05" tags="loc_security" position="4525,1100" size="100,100">&lt;h1 class="locationHeader"&gt;E.S.C. Security Desk&lt;/h1&gt;
+
+The shadow grunts.
+
+[[Return to Hub.-&gt;hub]]</tw-passagedata><tw-passagedata pid="53" name="friendApt-meetNicola-00" tags="loc_friendApt code_array" position="5300,2675" size="100,100">"Thanks for coming".
+
+[["It's no problem"-&gt;friendApt-meetNicola-01a]]
+[["I can't give you any of this stuff."-&gt;friendApt-meetNicola-01b]]
+
+&lt;!--CODE--&gt;
+(set: $availLinks to it - (a:"friendApt-meetNicola-00"))</tw-passagedata><tw-passagedata pid="54" name="friendApt-meetNicola-01a" tags="loc_friendApt" position="5175,2625" size="100,100">"So, what did they say you were doing?"
+
+[["They said I'm just moving the tenent's items."-&gt;friendApt-meetNicola-02]]</tw-passagedata><tw-passagedata pid="55" name="friendApt-meetNicola-01b" tags="loc_friendApt" position="5175,2725" size="100,100">"I understand... but what you need to understand is this job isn't what you think."
+
+[["They said I'm just moving the tenent's items."-&gt;friendApt-meetNicola-02]]</tw-passagedata><tw-passagedata pid="56" name="friendApt-meetNicola-02" tags="loc_friendApt" position="5050,2675" size="100,100">"Well... you're not moving them for Lee. He's been gone for over a week now."
+
+[["So? People move all the time"-&gt;friendApt-meetNicola-03a]]
+[["How do you know this?"-&gt;friendApt-meetNicola-03b]]</tw-passagedata><tw-passagedata pid="57" name="friendApt-meetNicola-03a" tags="loc_friendApt" position="4925,2625" size="100,100">"But they usually take their apartment with them. Besides, unlike most of us, Lee wasn't the type to be mobile."
+
+[["Mobility isn't a choice. We all move around the ESC."-&gt;friendApt-meetNicola-04]]</tw-passagedata><tw-passagedata pid="58" name="friendApt-meetNicola-03b" tags="loc_friendApt" position="4925,2725" size="100,100">"Lee wasn't the type to be mobile. Unlike most of us."
+
+[["Mobility isn't a choice. We all move around the ESC."-&gt;friendApt-meetNicola-04]]</tw-passagedata><tw-passagedata pid="59" name="friendApt-meetNicola-04" tags="loc_friendApt" position="4800,2675" size="100,100">"You're
+ right. But there are loopholes."
+
+Nicola looks down.
+
+"Lee was part of the software division, helped program a lot of the 
+algorithms for individual mobility among the complexes. If you perform 
+the right way, collect enough merits but also accrue debts or demerits. 
+You can stay in the same place"
+
+[["Is that legal?"-&gt;friendApt-meetNicola-05a]]
+[["Is this what you do?"-&gt;friendApt-meetNicola-05b]]</tw-passagedata><tw-passagedata pid="60" name="friendApt-meetNicola-05a" tags="loc_friendApt" position="4675,2600" size="100,100">Nicola shrugs.
+
+"The software allows it so it might as well be."
+
+[[And you do it anyway?-&gt;friendApt-meetNicola-05b]]
+[["What do you think happened to him?"-&gt;friendApt-meetNicola-06]]</tw-passagedata><tw-passagedata pid="61" name="friendApt-meetNicola-06" tags="loc_friendApt" position="4525,2675" size="100,100">"Maybe
+ ESC-SEC caught on. Lee also could get really impassioned about it, said
+ that constantly moving was by design to prevent people from coming 
+together. I believed him, but he really liked bringing it up every time 
+he could."
+	
+You get the impressions that Nicola knew Lee for longer than most people
+ get to know each other in this place.
+
+[["Can I help?"-&gt;friendApt-meetNicola-07b]]
+[["So what do you want from me?"-&gt;friendApt-meetNicola-07a]]</tw-passagedata><tw-passagedata pid="62" name="friendApt-meetNicola-08" tags="loc_friendApt" position="4200,2700" size="100,100">Nicola
+ considers for a moment.
+
+"I know it's a lot but... Lee really got obsessed with a before-era 
+game. Some crappy old fantasy thing incompatible with ESC-NET. I think 
+it was meant to be full of people but he played it alone. It might still
+ be on his computer. If you find it, I'd appreciate if you could give me
+ his copy."
+
+[["Okay"-&gt;friendApt]]</tw-passagedata><tw-passagedata pid="63" name="bar" tags="loc_bar" position="5500,1675" size="200,200">The
+ space is tiny, holding only about 3 people at the bar itself. Just some
+ ads for upper level crap on the archaic TV. Leonards stands, inspecting
+ the damage of the broken auto-bartender.
+
+[[Talk to Leonard-&gt;bar-talkLeonard]]
+[[Go back to Hub. -&gt;hub]]</tw-passagedata><tw-passagedata pid="64" name="bar-autoBartender-00" tags="loc_bar subloc_seat" position="5300,1650" size="100,100">As you take a seat the machine whirs to life.
+"Welcome, what can I get you today?"
+
+You take a look at the familar offerings.
+
+[[CarboFill (.005 eC)-&gt;bar-autoBartender-01]]
+[[Joyful Green (.010 eC)-&gt;bar-autoBartender-01]]
+[[KaleAle (0.20 eC)-&gt;bar-autoBartender-01]]</tw-passagedata><tw-passagedata pid="65" name="bar-autoBartender-01" tags="loc_bar subloc_seat" position="5175,1650" size="100,100">"Coming right up."
+
+The machine places a glass in front of you and lowers in a nozzle.
+
+You here a repetitive clicking noise but no drink comes out.
+
+[[Um-&gt;bar-autoBartender-02]]</tw-passagedata><tw-passagedata pid="66" name="bar-autoBartender-02" tags="loc_bar subloc_seat" position="5050,1650" size="100,100">A
+ loud pop shakes the counter and all sorts of liquid start spewing out 
+the back of the machine. Despite the chaos, the machine keeps a cordial 
+attitude.
+
+"We're sorry, our bartender is currently out of order. A technician will
+ c o m e  t o  r e  p   a   i   r..."
+
+The automatic voice trails off.
+
+Another, more human voice sounds off from [[behind the 
+counter.-&gt;bar-autoBartender-03]]</tw-passagedata><tw-passagedata pid="67" name="bar-autoBartender-03" tags="loc_bar subloc_seat" position="4925,1650" size="100,100">"Goddamnit!"
+
+A stout older man heaves himself up into view.
+
+"I really thought this one would've been it. Alright we'll go old fashioned I guess, better that way, what can I get you?"
+
+[[CarboFill (.005 eC)-&gt;bar-autoBartender-04a]]
+[[Joyful Green (.010 eC)-&gt;bar-autoBartender-04a]]
+[[KaleAle (0.20 eC)-&gt;bar-autoBartender-04a]]
+[[I'm not thirsty, really.-&gt;bar-autoBartender-04b]]</tw-passagedata><tw-passagedata pid="68" name="bar-autoBartender-04a" tags="loc_bar subloc_seat" position="4800,1575" size="100,100">"Coming
+ right up."
+
+He punctures a hole directly into a dispensing pouch and squeezes it 
+into your glass. The drink is flat and unnappealing and something 
+definitely mixed in there in a way it shouldn't have.
+
+[[Attempt to drink it.-&gt;bar-autoBartender-05]]
+[[Actually, nevermind.-&gt;bar-autoBartender-06]]</tw-passagedata><tw-passagedata pid="69" name="bar-autoBartender-04b" tags="loc_bar subloc_seat" position="4800,1725" size="100,100">"Aw, don't let this piece of junk steal your appetite. I'd be starving if I did!"
+
+His huge laugh fills the cramped space.
+
+[[Try to down the drink.-&gt;bar-autoBartender-05]]
+[[Just... stare at the drink.-&gt;bar-autoBartender-06]]</tw-passagedata><tw-passagedata pid="70" name="mysteryApt-intro" tags="loc_mysteryApt" position="6500,2500" size="200,100">You
+ enter the apartment. You don't know what you expected, but it's much 
+cleaner than you anticipated. It wouldn't take you more than an hour to 
+pack everything up in here.
+
+There might be enough time to stay and [[look around. -&gt;mysteryApt]]</tw-passagedata><tw-passagedata pid="71" name="mysteryApt-drawers" tags="loc_mysteryApt subloc_drawers code_gate" position="6900,2550" size="100,100">You look into the drawers. They are completely empty.
+
+[[Go back.-&gt;mysteryApt]]
+(if: not ($inv contains "Note from Lee"))[ [[Check again-&gt;mysteryApt-drawers-note-00]] ]</tw-passagedata><tw-passagedata pid="72" name="mysteryApt-window" tags="loc_mysteryApt subloc_window code_gate" position="6900,2675" size="100,100">Through
+ the murky depths you see the vast city spreading out. Underneath, 
+miraculously and despite the lack of light, there's a living, thriving 
+plant.
+
+[[Go back.-&gt;mysteryApt]]
+(if: $inv contains "Water Bottle")[ [[Water the plant with Water 
+Bottle.-&gt;mysteryApt-window-waterPlant]] ]</tw-passagedata><tw-passagedata pid="73" name="mysteryApt-computer" tags="loc_mysteryApt subloc_screen code_gate" position="6900,2975" size="100,100">There's
+ a faint burnt smell as you approach the computer. Maybe something 
+fried? It's much fancier than the computer you have, looks like it was 
+taken straight from an I.T. storeroom.
+
+(if: $availLinks contains "mysteryApt-computer-home")[ [[Log 
+in.-&gt;mysteryApt-computer-home]] ]
+(else:)[ [[Log in.-&gt;mysteryApt-computer-boot]] ]
+[[Go back.-&gt;mysteryApt]]</tw-passagedata><tw-passagedata pid="74" name="mysteryApt-drawers-note-00" tags="loc_mysteryApt subloc_drawers" position="7050,2550" size="100,100">You
+ reach in further, feeling around for anything that may have been left 
+behind.
+
+You touch something rough and stuck to the underside of the drawers. 
+It's dangerously thin yet light, you nearly cut yourself pulling it out.
+
+[[Inspect the item.-&gt;mysteryApt-drawers-note-01]]</tw-passagedata><tw-passagedata pid="75" name="mysteryApt-drawers-note-01" tags="loc_mysteryApt subloc_drawers code_array" position="7200,2550" size="100,100">You hold a small, off white square in your hand. You have no idea what this thing is. There's some text displayed on it.
+
+Note added to items.
+
+[[Read it.-&gt;inventory-note]]
+
+(set: $inv to it + (a:"Note from Lee"))</tw-passagedata><tw-passagedata pid="76" name="inventory-note" tags="item" position="5600,100" size="100,100">It
+ reads like a memo, but the font is a bit hard to make out:
+
+&lt;div class="LeeLetter"&gt;
+To C, (or whomever nosey enough)
+
+I may be gone, for one reason or another. But there's no point in 
+worrying about me– only worry about yourself. Some may be fine with our 
+day to day here. If you know me, you know how I felt about it. I tried 
+my best to do something about it, whether or not I failed or succeeded 
+is outside the bounds of this note.
+
+If you want to follow me, all you need to do is allow yourself to grow.
+
+- (formerly) Lee
+&lt;/div&gt;</tw-passagedata><tw-passagedata pid="77" name="friendApt-showGame" tags="loc_friendApt" position="5300,2975" size="100,100">Dialogue
+ WIP. Says she knows about this, m.p. had gotten really addicted to it 
+recently. Kept saying there was more to it than just a crude empty world
+ ful of ghosts.
+
+Hint: try running the game in Apt 77.</tw-passagedata><tw-passagedata pid="78" name="friendApt-showNote" tags="loc_friendApt" position="5300,3125" size="100,100">You pull out the note from Lee and show it to Nicola.
+
+She reads it silently.
+
+After a moment, she takes a deep breath. 
+
+"Thank you for showing this to me. I know you didn't have to."
+
+[[What is this thing?-&gt;friendApt-showNote-paper]]
+[[Do you know what he's talking about at the end? -&gt;friendApt-showNote-grow]]
+[[What did he succeed or fail at?-&gt;friendApt-showNote-failed]]</tw-passagedata><tw-passagedata pid="79" name="friendApt-showNote-paper" tags="loc_friendApt" position="4900,3050" size="100,100">Nicola
+ laughs. 
+
+"Lee really was an old soul. He went out of his way to find silly 
+before-era things like sticky notes."
+
+Her face stiffens a bit.
+
+"But... I think he used this specifically because it was the only way to
+ send me a message outside of ESC-NET. I always thought he was a bit too
+ paranoid when he said 'paper is private'. I guess this time it makes 
+sense."
+
+[[Do you know what he's talking about at the end? 
+-&gt;friendApt-showNote-grow]]
+[[What did he succeed or fail at?-&gt;friendApt-showNote-failed]]
+[[Back.-&gt;friendApt-showNote]]</tw-passagedata><tw-passagedata pid="80" name="friendApt-showNote-grow" tags="loc_friendApt code_array" position="4900,3350" size="100,100">"Yeah,
+ he always said: 'in order to grow you need to take root'. Kinda his 
+personal motto, and why he worked so hard to move around as little as 
+possible."
+
+[[What is this thing?-&gt;friendApt-showNote-paper]]
+[[What did he succeed or fail at?-&gt;friendApt-showNote-failed]]
+[[Back.-&gt;friendApt-showNote]]
+
+(set: $availLinks to it + (a:"bar-drink-water-store"))</tw-passagedata><tw-passagedata pid="81" name="friendApt-showNote-failed" tags="loc_friendApt" position="4900,3175" size="100,100">"I
+ don't know. Lee always was trying to get something to change in the 
+E.S.C. but people would either give him weird looks cause they just met 
+him or he couldn't get any traction on the Net cause of how fast things 
+move. Lately it felt like he turned more inward. I was worried that he 
+gave up. Maybe he did something that really crossed the line."
+
+[[What is this thing?-&gt;friendApt-showNote-paper]]
+[[Do you know what he's talking about at the end? 
+-&gt;friendApt-showNote-grow]]
+[[Back.-&gt;friendApt-showNote]]</tw-passagedata><tw-passagedata pid="82" name="mysteryApt-computer-boot" tags="loc_mysteryApt subloc_screen code_array code_gate" position="7050,2975" size="100,100">You turn on the computer.
+
+&lt;div class="computer-text"&gt;
+Welcome to first Time Setup. Please transfer over your account from a previous session or begin from scratch.
+&lt;/div&gt;
+
+[[Tap keycard-&gt;mysteryApt-computer-boot-error]]
+(if: $inv contains "Hard Drive")[ [[Restore from backup.-&gt;mysteryApt-computer-boot-restore]] ]
+[[Go back.-&gt;mysteryApt-computer]]</tw-passagedata><tw-passagedata pid="83" name="mysteryApt-computer-boot-error" tags="loc_mysteryApt subloc_screen code_array" position="7200,2975" size="100,100">&lt;div
+ class="computer-text"&gt;
+We're sorry, there are no saved accounts for the username "Lee T.B." A 
+ticket has automatically been created for you and an I.T. Personnel will
+ be in contact with you to resolve this issue.
+&lt;/div&gt;
+
+[[Go back.-&gt;mysteryApt-computer]]
+
+&lt;!--CODE--&gt;
+(set: $availLinks to it + (a:))</tw-passagedata><tw-passagedata pid="84" name="mysteryApt-computer-boot-restore" tags="loc_mysteryApt subloc_screen code_array" position="7050,3125" size="100,100">You fumble with the connectors doubtfully trying to plug this thing in. Finally it seems to catch.
+
+&lt;div class="computer-text"&gt;
+Restoring from previous session...
+
+Welcome Lee T.B. Press any button to sign in.
+&lt;/div&gt;
+
+[[Press a button.-&gt;mysteryApt-computer-home]]
+(set: $availLinks to it + (a:"mysteryApt-computer-home"))</tw-passagedata><tw-passagedata pid="85" name="bar-autoBartender-05" tags="subloc_seat loc_bar" position="4650,1650" size="100,100">You
+ bring the drip up to your lips and choke it down. It leaves a sour 
+taste and you know you'll be paying for that later on the toilet.
+
+[["Thanks."-&gt;bar-autoBartender-06]]</tw-passagedata><tw-passagedata pid="86" name="bar-autoBartender-06" tags="subloc_seat loc_bar" position="4525,1650" size="100,100">"Here... I've got something a little more appealing."
+
+He rummages behind the counter and pulls out an unmarked bottle.
+
+"Now...it's not exactly like the old stuff you know, but I think it tastes pretty close."
+
+[[Take a drink.-&gt;bar-autoBartender-07]]</tw-passagedata><tw-passagedata pid="87" name="bar-autoBartender-07" tags="subloc_seat loc_bar" position="4400,1650" size="100,100">It
+ burns as it goes down and you immediately cough half of it out. Somehow
+ the previous, accidental concoction was the better of the two.
+
+It's creator gives out a big laugh.
+
+"Ha Haaa! You naturals don't know a thing about acquired taste."
+
+[[What is that?-&gt;bar-autoBartender-08]]
+[[That's awful!-&gt;bar-autoBartender-08]]</tw-passagedata><tw-passagedata pid="88" name="bar-autoBartender-08" tags="subloc_seat loc_bar" position="4275,1650" size="100,100">"THAT
+ is my special concoction. I call it Leonard's 'New' number seven! Ha! 
+Though... I guess you wouldn't know what the old one tastes like."
+
+He taps his temple.
+
+"Made the taste all from memory. It doesn't really get you sloshed at 
+all on account of how hard they purify everything around here but it'll 
+give you a bit of a buzz."
+
+[[Thanks?-&gt;bar-autoBartender-09]]</tw-passagedata><tw-passagedata pid="89" name="friendApt-meetNicola-05b" tags="" position="4675,2725" size="100,100">Nicola
+ scoffs.
+
+"I'd think you were ESC-SEC if you weren't so obvious about it.
+
+I know, to you, it might feel like you're constantly moving up and 
+getting closer to getting your head out of the water but... you're as 
+stagnant as Lee is. As I am. At least the both of us could acknowledge 
+it."
+
+[["Is that legal?"-&gt;friendApt-meetNicola-05a]]
+[["So what do you think happened to Lee?-&gt;friendApt-meetNicola-06]]</tw-passagedata><tw-passagedata pid="90" name="friendApt-meetNicola-07a" tags="" position="4400,2650" size="100,100">From you I don't want anything. But, if Lee left anything behind...
+
+[[Like what?-&gt;friendApt-meetNicola-08]]</tw-passagedata><tw-passagedata pid="91" name="friendApt-meetNicola-07b" tags="" position="4400,2775" size="100,100">"I
+ don't know if there's anything that can be done for Lee. But, if you 
+could get me somehting of his, maybe to help me understand."
+
+[[Like what?-&gt;friendApt-meetNicola-08]]</tw-passagedata><tw-passagedata pid="92" name="friendApt-talkNicola" tags="loc_friendApt code_gate" position="5500,3000" size="100,200">(if: $inv contains "Note from Lee")[ [[Show Lee's Note to Nicola -&gt;friendApt-showNote]] ]
+(if: $inv contains "Video Game")[ [[Show the game to Nicola -&gt;friendApt-showGame]] ]</tw-passagedata><tw-passagedata pid="93" name="mysteryApt-window-waterPlant" tags="loc_mysteryApt subloc_window code_array" position="7050,2675" size="100,100">You pop open your bottle and start pouring the water into the soil, taking care not to let it spill over.
+
+For a moment, you feel struck by the quiet satisfaction of caring for something that isn't a utlitarian machine.
+
+Suddenly, the plant jolts down about an inch. A loud click comes from near the bed.
+
+(set: $availLinks to it + (a:"mysteryApt-screen-unlocked"))</tw-passagedata><tw-passagedata pid="94" name="inventory-water" tags="" position="5600,250" size="100,100">Double-click this passage to edit it.</tw-passagedata><tw-passagedata pid="95" name="inventory-game" tags="" position="5800,250" size="100,100">Double-click this passage to edit it.</tw-passagedata><tw-passagedata pid="96" name="inventory-keycard" tags="" position="6000,250" size="100,100">Double-click this passage to edit it.</tw-passagedata><tw-passagedata pid="97" name="inventory-brokenKeycard" tags="" position="6200,250" size="100,100">Double-click this passage to edit it.</tw-passagedata><tw-passagedata pid="98" name="inventory-fixedKeycard" tags="" position="6200,100" size="100,100">Double-click this passage to edit it.</tw-passagedata><tw-passagedata pid="99" name="inventory-backupDrive" tags="" position="5800,100" size="100,100">Double-click this passage to edit it.</tw-passagedata><tw-passagedata pid="100" name="bar-autoBartender-09" tags="subloc_seat loc_bar" position="4150,1650" size="100,100">"My pleasure."
+
+He stows away his toxic concoction.
+
+"Well then, did I scare you off? Or are you going to stick around and enjoy the wonderful atmosphere we got down here?"
+
+[[Talk to Leonard-&gt;bar-talkLeonard]]</tw-passagedata><tw-passagedata pid="101" name="bar-talkLeonard" tags="loc_bar subloc_seat" position="5500,2000" size="100,200">"What can Lenny do for ya?"
+
+[[Order a drink.-&gt;bar-orderDrink]]</tw-passagedata><tw-passagedata pid="102" name="bar-orderDrink" tags="loc_bar subloc_seat" position="5200,2000" size="100,100">"What'll it be?"
+
+[[CarboFill (.005 eC)-&gt;bar-drink-common]]
+[[Joyful Green (.010 eC)-&gt;bar-drink-common]]
+[[KaleAle (0.20 eC)-&gt;bar-drink-common]]
+[[The "special" stuff-&gt;bar-drink-special]]
+[[Just some water-&gt;bar-drink-water]]</tw-passagedata><tw-passagedata pid="103" name="bar-drink-common" tags="loc_bar subloc_seat" position="5000,1900" size="100,100">Leonard yanks out a beverage pack from the robot and squeezes it into a glass. You sip it until you've had enough.
+
+[[Talk to Leonard.-&gt;bar-talkLeonard]]</tw-passagedata><tw-passagedata pid="104" name="bar-drink-special" tags="loc_bar subloc_seat" position="5000,2025" size="100,100">"I
+ knew it'd grow on ya!"
+
+Leonard pours the brown liquid into your glass. It requires quite a few 
+sips to get down and all it really did was give you a headache.
+
+[[Talk to Leonard.-&gt;bar-talkLeonard]]</tw-passagedata><tw-passagedata pid="105" name="bar-drink-water" tags="loc_bar subloc_seat code_gate" position="5000,2150" size="100,100">"Water? You've got all the water you need all around you!"
+
+Leonard gives you a big slap on your shoulder.
+
+"Aw I'm just fooling around."
+
+He goes into the back before bringing out a glass with water.
+
+[[Drink water.-&gt;bar-drink-water-drink]]
+(if: $availLinks contains "bar-drink-water-store")[ [[Take water with you.-&gt;bar-drink-water-store]] ]</tw-passagedata><tw-passagedata pid="106" name="bar-drink-water-drink" tags="loc_bar subloc_seat" position="4850,2150" size="100,100">You gulp down the water. Could be colder but otherwise refreshing.
+
+[[Talk to Leonard.-&gt;bar-talkLeonard]]</tw-passagedata><tw-passagedata pid="107" name="bar-drink-water-store" tags="loc_bar subloc_seat code_array" position="4850,2275" size="100,100">You pour the water into a bottle and put it into your bag.
+
+[[Talk to Leonard.-&gt;bar-talkLeonard]]
+
+(set: $inv to it + (a:"Water Bottle"))</tw-passagedata><tw-passagedata pid="108" name="mysteryApt-screen" tags="loc_mysteryApt subloc_screen code_gate" position="7200,2800" size="100,100">A decoration screen hangs above the bed, playing footage of natural landscapes and creatures now long gone.
+
+[[Take down the screen.-&gt;mysteryApt-screen-behind]]
+(if: $availLinks contains "mysteryApt-screen-unlocked")[[Inspect a raised corner.-&gt;mysteryApt-screen-unlocked]]
+[[Go back.-&gt;mysteryApt]]</tw-passagedata><tw-passagedata pid="109" name="mysteryApt-screen-behind" tags="loc_mysteryApt subloc_screen" position="7400,2725" size="100,100">You take down the screen to reveal...
+
+a solid wall.
+
+Oh well, not everything is hiding something.
+
+[[Put the screen back.-&gt;mysteryApt]]</tw-passagedata><tw-passagedata pid="110" name="mysteryApt-screen-unlocked" tags="loc_mysteryApt subloc_screen code_array" position="7400,2850" size="100,100">You
+ bring your attention to a raised corner. As soon as you touch it, it 
+slides out to reveal a &lt;span class="key-item"&gt;hard 
+drive&lt;/span&gt;. It's labelled "backup boot".
+
+[[Take the drive.-&gt;mysteryApt]]
+(set: $inv to it + (a:"Hard Drive"))
+(set: $availLinks to it - (a:"mysteryApt-screen-unlocked"))</tw-passagedata><tw-passagedata pid="111" name="mysteryApt-computer-home" tags="loc_mysteryApt" position="7050,3275" size="100,100">The screen suddenly goes blank. Maybe this was a faulty boot?
+
+WIP.</tw-passagedata></tw-storydata>
+    </div>
+    <script>
+      Twison.convert();
+    </script>
+  
+
+<div>
+    <div id="twoseven-ext-tab-media-modal" class="twoseven-ext-tab-media-modal" style="display: none;">
+      <!-- Modal content -->
+      <div class="twoseven-ext-tab-media-modal-content">
+        <div class="iframe-container" style="height: 100%; width: 100%;">
+          <span class="close">×</span>
+        </div>
+      </div>
+    </div></div></body></html>
